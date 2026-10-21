@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0a1010">
-    <meta name="description" content="One city. Two hearts. One unforgettable night. Adam and Monika count down to Sting at Atlas Arena, Łódź, on 10 June 2027.">
-    <title>Sting in Łódź • Adam & Monika • 10 June 2027</title>
+    <meta name="description" content="Jedno miasto. Dwa serca. Jeden niezapomniany wieczór. Adam i Monika odliczają do koncertu Stinga w Atlas Arenie w Łodzi, 10 czerwca 2027." data-en-content="One city. Two hearts. One unforgettable night. Adam and Monika count down to Sting at Atlas Arena, Łódź, on 10 June 2027.">
+    <title data-en="Sting in Łódź • Adam & Monika • 10 June 2027">Sting w Łodzi • Adam i Monika • 10 czerwca 2027</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <a class="skip-link" href="#countdown">Skip to countdown</a>
+    <a class="skip-link" href="#countdown" data-en="Skip to countdown">Przejdź do odliczania</a>
     <header class="site-header">
-        <a class="wordmark" href="#home" aria-label="Sting concert home">STING<span class="wordmark-dot">.</span></a>
-        <span class="header-note">A NIGHT TO REMEMBER</span>
-        <a class="nav-link" href="#journey">Our journey <span aria-hidden="true">↗</span></a>
+        <a class="wordmark" href="#home" aria-label="Koncert Stinga — strona główna" data-en-aria-label="Sting concert home">STING<span class="wordmark-dot">.</span></a>
+        <span class="header-note" data-en="A NIGHT TO REMEMBER">NIEZAPOMNIANY WIECZÓR</span>
+        <div class="header-actions">
+            <a class="nav-link" href="#journey"><span data-en="Our journey">Nasza podróż</span> <span aria-hidden="true">↗</span></a>
+            <button class="language-switch" id="languageSwitch" type="button" lang="en" aria-label="Switch to English" title="Switch to English" hidden>EN</button>
+        </div>
     </header>
 
     <main>
@@ -25,9 +28,9 @@
                 <p class="event-meta">
                     <span>Atlas Arena</span><span class="meta-dot" aria-hidden="true">•</span>
                     <span>Łódź</span><span class="meta-dot" aria-hidden="true">•</span>
-                    <time datetime="2027-06-10">Thursday, 10 June 2027</time>
+                    <time datetime="2027-06-10" data-en="Thursday, 10 June 2027">Czwartek, 10 czerwca 2027</time>
                 </p>
-                <p class="names" aria-label="Adam and Monika">
+                <p class="names" aria-label="Adam i Monika" data-en-aria-label="Adam and Monika">
                     <span class="adam">Adam</span>
                     <span class="heart" aria-hidden="true">❤️</span>
                     <span class="monika">Monika</span>
@@ -35,50 +38,50 @@
             </div>
 
             <div class="glass-widget" id="countdown" tabindex="-1">
-                <p class="section-kicker" id="countdownHeading">THE NIGHT GETS CLOSER</p>
+                <p class="section-kicker" id="countdownHeading">TEN WIECZÓR JEST CORAZ BLIŻEJ</p>
                 <div class="countdown" role="group" aria-labelledby="countdownHeading">
-                    <div class="unit"><span id="days" class="number">—</span><span class="label">Days</span></div>
-                    <div class="unit"><span id="hours" class="number">—</span><span class="label">Hours</span></div>
-                    <div class="unit"><span id="minutes" class="number">—</span><span class="label">Minutes</span></div>
-                    <div class="unit"><span id="seconds" class="number">—</span><span class="label">Seconds</span></div>
+                    <div class="unit"><span id="days" class="number">—</span><span class="label" data-en="Days">Dni</span></div>
+                    <div class="unit"><span id="hours" class="number">—</span><span class="label" data-en="Hours">Godziny</span></div>
+                    <div class="unit"><span id="minutes" class="number">—</span><span class="label" data-en="Minutes">Minuty</span></div>
+                    <div class="unit"><span id="seconds" class="number">—</span><span class="label" data-en="Seconds">Sekundy</span></div>
                 </div>
 
                 <div class="progress-wrapper">
-                    <div class="progress-bar" id="journeyProgress" role="progressbar" aria-label="Waiting period completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="progress-bar" id="journeyProgress" role="progressbar" aria-label="Postęp oczekiwania" data-en-aria-label="Waiting period completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                         <div id="progressFill" class="progress-fill"></div>
                     </div>
-                    <p class="progress-text" id="progressText">Counting down…</p>
+                    <p class="progress-text" id="progressText">Odliczamy…</p>
                 </div>
 
                 <ul class="badges">
-                    <li class="badge badge-gold">✅ Tickets secured</li>
-                    <li class="badge badge-emerald">🏠 Home city: Łódź</li>
-                    <li class="badge badge-gold">🎶 Sting live</li>
+                    <li class="badge badge-gold" data-en="✅ Tickets secured">✅ Bilety kupione</li>
+                    <li class="badge badge-emerald" data-en="🏠 Home city: Łódź">🏠 Nasze miasto: Łódź</li>
+                    <li class="badge badge-gold" data-en="🎶 Sting live">🎶 Sting na żywo</li>
                 </ul>
 
-                <p class="countdown-caption" id="concertStatus" role="status">Every day closer to concert night...</p>
-                <noscript><p class="countdown-caption">Enable JavaScript for the live countdown. Concert: 10 June 2027, 19:00 in Łódź.</p></noscript>
+                <p class="countdown-caption" id="concertStatus" role="status">Każdego dnia bliżej koncertowego wieczoru...</p>
+                <noscript><p class="countdown-caption">Włącz JavaScript, aby zobaczyć odliczanie na żywo. Koncert: 10 czerwca 2027, godz. 19:00 w Łodzi.</p></noscript>
             </div>
         </section>
 
         <section class="journey" id="journey" aria-labelledby="journey-title">
             <div class="journey-heading">
-                <div><p class="eyebrow">EVERY DAY, A LITTLE CLOSER</p><h2 id="journey-title">The anticipation is <em>part of the magic.</em></h2></div>
+                <div><p class="eyebrow" data-en="EVERY DAY, A LITTLE CLOSER">KAŻDEGO DNIA TROCHĘ BLIŻEJ</p><h2 id="journey-title"><span data-en="The anticipation is">Oczekiwanie to</span> <em data-en="part of the magic.">część tej magii.</em></h2></div>
             </div>
             <ol class="milestones">
-                <li class="milestone"><span class="milestone-icon completed" aria-hidden="true">✓</span><div><p class="milestone-date">21 OCTOBER 2026</p><h3>It’s official. We’re going.</h3><p>Tickets secured. A date worth circling.</p></div></li>
-                <li class="milestone"><span class="milestone-icon current" id="waitingIcon" aria-hidden="true">⌖</span><div><p class="milestone-date" id="waitingLabel">RIGHT HERE, RIGHT NOW</p><h3>Łódź, our home city.</h3><p>The skyline we know. A night we’ll never forget.</p></div></li>
-                <li class="milestone"><span class="milestone-icon" id="concertIcon" aria-hidden="true">♫</span><div><p class="milestone-date">10 JUNE 2027 · 19:00 CEST</p><h3>Sting. Live. Together.</h3><p>Atlas Arena. Just us and the music.</p></div></li>
+                <li class="milestone"><span class="milestone-icon completed" aria-hidden="true">✓</span><div><p class="milestone-date" data-en="21 OCTOBER 2026">21 PAŹDZIERNIKA 2026</p><h3 data-en="It’s official. We’re going.">To już pewne. Idziemy.</h3><p data-en="Tickets secured. A date worth circling.">Bilety kupione. Ta data zasługuje na miejsce w kalendarzu.</p></div></li>
+                <li class="milestone"><span class="milestone-icon current" id="waitingIcon" aria-hidden="true">⌖</span><div><p class="milestone-date" id="waitingLabel">TU I TERAZ</p><h3 data-en="Łódź, our home city.">Łódź, nasze miasto.</h3><p data-en="The skyline we know. A night we’ll never forget.">Znajoma panorama. Wieczór, którego nigdy nie zapomnimy.</p></div></li>
+                <li class="milestone"><span class="milestone-icon" id="concertIcon" aria-hidden="true">♫</span><div><p class="milestone-date" data-en="10 JUNE 2027 · 19:00 CEST">10 CZERWCA 2027 · 19:00 CEST</p><h3 data-en="Sting. Live. Together.">Sting. Na żywo. Razem.</h3><p data-en="Atlas Arena. Just us and the music.">Atlas Arena. Tylko my i muzyka.</p></div></li>
             </ol>
         </section>
 
-        <section class="closing" aria-label="A concert night for two">
+        <section class="closing" aria-label="Koncertowy wieczór we dwoje" data-en-aria-label="A concert night for two">
             <span class="closing-spark" aria-hidden="true">✦</span>
-            <p>Some nights are worth <em>waiting for.</em></p>
+            <p><span data-en="Some nights are worth">Na niektóre wieczory</span> <em data-en="waiting for.">warto czekać.</em></p>
             <span class="closing-note"><span class="adam">ADAM</span> <span aria-hidden="true">&</span> <span class="monika">MONIKA</span> · ŁÓDŹ 2027</span>
         </section>
     </main>
-    <footer><span>OUR LITTLE CORNER OF THE COUNTDOWN.</span><span>10.06.2027 <span class="footer-dot" aria-hidden="true">·</span> ATLAS ARENA</span></footer>
+    <footer><span data-en="OUR LITTLE CORNER OF THE COUNTDOWN.">NASZ MAŁY ZAKĄTEK ODLICZANIA.</span><span>10.06.2027 <span class="footer-dot" aria-hidden="true">·</span> ATLAS ARENA</span></footer>
 
     <script>
         // Explicit Warsaw offsets keep the concert time correct in every visitor's timezone.
@@ -89,6 +92,67 @@
         const progressText = document.getElementById("progressText");
         const journeyProgress = document.getElementById("journeyProgress");
         let concertArrived = false;
+        let language = "pl";
+        const languageSwitch = document.getElementById("languageSwitch");
+        const translations = {
+            pl: {
+                heading: "TEN WIECZÓR JEST CORAZ BLIŻEJ",
+                arrivedHeading: "KONIEC CZEKANIA",
+                status: "Każdego dnia bliżej koncertowego wieczoru...",
+                arrivedStatus: "Nadszedł czas koncertu. Przed nami niezapomniany wieczór!",
+                waiting: "TU I TERAZ",
+                arrivedWaiting: "OCZEKIWANIE DOBIEGŁO KOŃCA",
+                progress: "oczekiwania za nami"
+            },
+            en: {
+                heading: "THE NIGHT GETS CLOSER",
+                arrivedHeading: "THE WAIT IS OVER",
+                status: "Every day closer to concert night...",
+                arrivedStatus: "Concert time has arrived. Here’s to an unforgettable night!",
+                waiting: "RIGHT HERE, RIGHT NOW",
+                arrivedWaiting: "THE WAIT IS COMPLETE",
+                progress: "of waiting period completed"
+            }
+        };
+        const localizedElements = Array.from(document.querySelectorAll("[data-en], [data-en-aria-label], [data-en-content]"), element => ({
+            element,
+            text: element.hasAttribute("data-en") ? element.textContent : null,
+            ariaLabel: element.getAttribute("aria-label"),
+            content: element.getAttribute("content")
+        }));
+
+        function updateStatus() {
+            const copy = translations[language];
+            document.getElementById("countdownHeading").textContent = concertArrived ? copy.arrivedHeading : copy.heading;
+            document.getElementById("concertStatus").textContent = concertArrived ? copy.arrivedStatus : copy.status;
+            document.getElementById("waitingLabel").textContent = concertArrived ? copy.arrivedWaiting : copy.waiting;
+        }
+
+        function setLanguage(nextLanguage) {
+            language = nextLanguage === "en" ? "en" : "pl";
+            document.documentElement.lang = language;
+            localizedElements.forEach(({ element, text, ariaLabel, content }) => {
+                if (text !== null) element.textContent = language === "en" ? element.dataset.en : text;
+                if (element.hasAttribute("data-en-aria-label")) {
+                    element.setAttribute("aria-label", language === "en" ? element.dataset.enAriaLabel : ariaLabel);
+                }
+                if (element.hasAttribute("data-en-content")) {
+                    element.setAttribute("content", language === "en" ? element.dataset.enContent : content);
+                }
+            });
+            languageSwitch.textContent = language === "pl" ? "EN" : "PL";
+            languageSwitch.lang = language === "pl" ? "en" : "pl";
+            const switchLabel = language === "pl" ? "Switch to English" : "Przełącz na polski";
+            languageSwitch.setAttribute("aria-label", switchLabel);
+            languageSwitch.title = switchLabel;
+            updateCountdown();
+            updateStatus();
+        }
+
+        languageSwitch.addEventListener("click", () => {
+            setLanguage(language === "pl" ? "en" : "pl");
+            try { localStorage.setItem("sting-language", language); } catch { /* Storage may be unavailable. */ }
+        });
 
         function updateCountdown() {
             const now = Date.now();
@@ -101,13 +165,12 @@
             });
             const percent = Math.max(0, Math.min(100, (now - purchaseDate) / (concertDate - purchaseDate) * 100));
             progressFill.style.width = `${percent}%`;
-            progressText.textContent = `${percent.toFixed(1)}% of waiting period completed`;
+            const formattedPercent = percent.toLocaleString(language === "pl" ? "pl-PL" : "en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+            progressText.textContent = `${formattedPercent}% ${translations[language].progress}`;
             journeyProgress.setAttribute("aria-valuenow", percent.toFixed(1));
             if (diff === 0 && !concertArrived) {
                 concertArrived = true;
-                document.getElementById("countdownHeading").textContent = "THE WAIT IS OVER";
-                document.getElementById("concertStatus").textContent = "Concert time has arrived. Here’s to an unforgettable night!";
-                document.getElementById("waitingLabel").textContent = "THE WAIT IS COMPLETE";
+                updateStatus();
                 document.getElementById("waitingIcon").classList.remove("current");
                 document.getElementById("waitingIcon").classList.add("completed");
                 document.getElementById("concertIcon").classList.add("completed");
@@ -115,7 +178,10 @@
             return diff;
         }
 
-        updateCountdown();
+        let savedLanguage = "pl";
+        try { savedLanguage = localStorage.getItem("sting-language") || "pl"; } catch { /* Use Polish when storage is unavailable. */ }
+        setLanguage(savedLanguage);
+        languageSwitch.hidden = false;
         if (!concertArrived) {
             const countdownTimer = setInterval(() => {
                 if (updateCountdown() === 0) clearInterval(countdownTimer);
