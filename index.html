@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sting Countdown • Adam & Monika</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+
+    <section class="hero">
+
+        <h1 class="title">🎸 STING</h1>
+
+        <div class="subtitle">
+            Atlas Arena • Łódź • Thursday, 10 June 2027
+        </div>
+
+        <div class="names">
+            <span class="adam">Adam</span>
+            ❤️
+            <span class="monika">Monika</span>
+        </div>
+
+        <div class="countdown">
+
+            <div class="unit">
+                <div id="days" class="number">0</div>
+                <div class="label">Days</div>
+            </div>
+
+            <div class="unit">
+                <div id="hours" class="number">0</div>
+                <div class="label">Hours</div>
+            </div>
+
+            <div class="unit">
+                <div id="minutes" class="number">0</div>
+                <div class="label">Minutes</div>
+            </div>
+
+            <div class="unit">
+                <div id="seconds" class="number">0</div>
+                <div class="label">Seconds</div>
+            </div>
+
+        </div>
+
+        <div class="progress-wrapper">
+
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+
+            <div id="progressText" class="progress-text">
+                Loading...
+            </div>
+
+        </div>
+
+        <div class="milestones">
+            <div class="milestone">✅ Tickets secured</div>
+            <div class="milestone">🏠 Home city: Łódź</div>
+            <div class="milestone">🎶 Sting live</div>
+        </div>
+
+        <div class="quote">
+            Every day closer to concert night...
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+const purchaseDate = new Date("2026-10-21T00:00:00");
+const concertDate = new Date("2027-06-10T19:00:00");
+
+function updateCountdown() {
+
+    const now = new Date();
+    const diff = concertDate - now;
+
+    if (diff <= 0) {
+        document.body.innerHTML = `
+            <h1 style="
+                color:white;
+                text-align:center;
+                font-family:Segoe UI,sans-serif;
+                padding-top:15vh;">
+                🎸 Concert Day Has Arrived 🎸
+            </h1>`;
+        return;
+    }
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+
+    const total = concertDate - purchaseDate;
+    const elapsed = now - purchaseDate;
+
+    const percent =
+        Math.max(0, Math.min(100,
+        (elapsed / total) * 100));
+
+    document.getElementById("progressFill")
+        .style.width = percent + "%";
+
+    document.getElementById("progressText")
+        .textContent =
+        `${percent.toFixed(1)}% of waiting period completed`;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
