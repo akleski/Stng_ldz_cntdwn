@@ -3,128 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sting Countdown • Adam & Monika</title>
-
+    <meta name="theme-color" content="#0a1010">
+    <meta name="description" content="One city. Two hearts. One unforgettable night. Adam and Monika count down to Sting at Atlas Arena, Łódź, on 10 June 2027.">
+    <title>Sting in Łódź • Adam & Monika • 10 June 2027</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <a class="skip-link" href="#countdown">Skip to countdown</a>
+    <header class="site-header">
+        <a class="wordmark" href="#home" aria-label="Sting concert home">STING<span class="wordmark-dot">.</span></a>
+        <span class="header-note">A NIGHT TO REMEMBER</span>
+        <a class="nav-link" href="#journey">Our journey <span aria-hidden="true">↗</span></a>
+    </header>
 
-<div class="container">
-
-    <section class="hero">
-
-        <h1 class="title">🎸 STING</h1>
-
-        <div class="subtitle">
-            Atlas Arena • Łódź • Thursday, 10 June 2027
-        </div>
-
-        <div class="names">
-            <span class="adam">Adam</span>
-            ❤️
-            <span class="monika">Monika</span>
-        </div>
-
-        <div class="countdown">
-
-            <div class="unit">
-                <div id="days" class="number">0</div>
-                <div class="label">Days</div>
+    <main>
+        <section class="hero" id="home" aria-labelledby="hero-title">
+            <div class="hero-scrim" aria-hidden="true"></div>
+            <div class="particles" id="particles" aria-hidden="true"></div>
+            <div class="hero-content">
+                <h1 id="hero-title"><span class="guitar" aria-hidden="true">🎸</span> STING</h1>
+                <p class="event-meta">
+                    <span>Atlas Arena</span><span class="meta-dot" aria-hidden="true">•</span>
+                    <span>Łódź</span><span class="meta-dot" aria-hidden="true">•</span>
+                    <time datetime="2027-06-10">Thursday, 10 June 2027</time>
+                </p>
+                <p class="names" aria-label="Adam and Monika">
+                    <span class="adam">Adam</span>
+                    <span class="heart" aria-hidden="true">❤️</span>
+                    <span class="monika">Monika</span>
+                </p>
             </div>
 
-            <div class="unit">
-                <div id="hours" class="number">0</div>
-                <div class="label">Hours</div>
+            <div class="glass-widget" id="countdown" tabindex="-1">
+                <p class="section-kicker" id="countdownHeading">THE NIGHT GETS CLOSER</p>
+                <div class="countdown" role="group" aria-labelledby="countdownHeading">
+                    <div class="unit"><span id="days" class="number">—</span><span class="label">Days</span></div>
+                    <div class="unit"><span id="hours" class="number">—</span><span class="label">Hours</span></div>
+                    <div class="unit"><span id="minutes" class="number">—</span><span class="label">Minutes</span></div>
+                    <div class="unit"><span id="seconds" class="number">—</span><span class="label">Seconds</span></div>
+                </div>
+
+                <div class="progress-wrapper">
+                    <div class="progress-bar" id="journeyProgress" role="progressbar" aria-label="Waiting period completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">Counting down…</p>
+                </div>
+
+                <ul class="badges">
+                    <li class="badge badge-gold">✅ Tickets secured</li>
+                    <li class="badge badge-emerald">🏠 Home city: Łódź</li>
+                    <li class="badge badge-gold">🎶 Sting live</li>
+                </ul>
+
+                <p class="countdown-caption" id="concertStatus" role="status">Every day closer to concert night...</p>
+                <noscript><p class="countdown-caption">Enable JavaScript for the live countdown. Concert: 10 June 2027, 19:00 in Łódź.</p></noscript>
             </div>
+        </section>
 
-            <div class="unit">
-                <div id="minutes" class="number">0</div>
-                <div class="label">Minutes</div>
+        <section class="journey" id="journey" aria-labelledby="journey-title">
+            <div class="journey-heading">
+                <div><p class="eyebrow">EVERY DAY, A LITTLE CLOSER</p><h2 id="journey-title">The anticipation is <em>part of the magic.</em></h2></div>
             </div>
+            <ol class="milestones">
+                <li class="milestone"><span class="milestone-icon completed" aria-hidden="true">✓</span><div><p class="milestone-date">21 OCTOBER 2026</p><h3>It’s official. We’re going.</h3><p>Tickets secured. A date worth circling.</p></div></li>
+                <li class="milestone"><span class="milestone-icon current" id="waitingIcon" aria-hidden="true">⌖</span><div><p class="milestone-date" id="waitingLabel">RIGHT HERE, RIGHT NOW</p><h3>Łódź, our home city.</h3><p>The skyline we know. A night we’ll never forget.</p></div></li>
+                <li class="milestone"><span class="milestone-icon" id="concertIcon" aria-hidden="true">♫</span><div><p class="milestone-date">10 JUNE 2027 · 19:00 CEST</p><h3>Sting. Live. Together.</h3><p>Atlas Arena. Just us and the music.</p></div></li>
+            </ol>
+        </section>
 
-            <div class="unit">
-                <div id="seconds" class="number">0</div>
-                <div class="label">Seconds</div>
-            </div>
+        <section class="closing" aria-label="A concert night for two">
+            <span class="closing-spark" aria-hidden="true">✦</span>
+            <p>Some nights are worth <em>waiting for.</em></p>
+            <span class="closing-note"><span class="adam">ADAM</span> <span aria-hidden="true">&</span> <span class="monika">MONIKA</span> · ŁÓDŹ 2027</span>
+        </section>
+    </main>
+    <footer><span>OUR LITTLE CORNER OF THE COUNTDOWN.</span><span>10.06.2027 <span class="footer-dot" aria-hidden="true">·</span> ATLAS ARENA</span></footer>
 
-        </div>
+    <script>
+        // Explicit Warsaw offsets keep the concert time correct in every visitor's timezone.
+        const purchaseDate = new Date("2026-10-21T00:00:00+02:00");
+        const concertDate = new Date("2027-06-10T19:00:00+02:00");
+        const units = ["days", "hours", "minutes", "seconds"].map(id => document.getElementById(id));
+        const progressFill = document.getElementById("progressFill");
+        const progressText = document.getElementById("progressText");
+        const journeyProgress = document.getElementById("journeyProgress");
+        let concertArrived = false;
 
-        <div class="progress-wrapper">
+        function updateCountdown() {
+            const now = Date.now();
+            const diff = Math.max(0, concertDate.getTime() - now);
+            const values = [Math.floor(diff / 86400000), Math.floor(diff / 3600000) % 24,
+                Math.floor(diff / 60000) % 60, Math.floor(diff / 1000) % 60];
+            values.forEach((value, index) => {
+                const text = String(value).padStart(2, "0");
+                if (units[index].textContent !== text) units[index].textContent = text;
+            });
+            const percent = Math.max(0, Math.min(100, (now - purchaseDate) / (concertDate - purchaseDate) * 100));
+            progressFill.style.width = `${percent}%`;
+            progressText.textContent = `${percent.toFixed(1)}% of waiting period completed`;
+            journeyProgress.setAttribute("aria-valuenow", percent.toFixed(1));
+            if (diff === 0 && !concertArrived) {
+                concertArrived = true;
+                document.getElementById("countdownHeading").textContent = "THE WAIT IS OVER";
+                document.getElementById("concertStatus").textContent = "Concert time has arrived. Here’s to an unforgettable night!";
+                document.getElementById("waitingLabel").textContent = "THE WAIT IS COMPLETE";
+                document.getElementById("waitingIcon").classList.remove("current");
+                document.getElementById("waitingIcon").classList.add("completed");
+                document.getElementById("concertIcon").classList.add("completed");
+            }
+            return diff;
+        }
 
-            <div class="progress-bar">
-                <div id="progressFill" class="progress-fill"></div>
-            </div>
+        updateCountdown();
+        if (!concertArrived) {
+            const countdownTimer = setInterval(() => {
+                if (updateCountdown() === 0) clearInterval(countdownTimer);
+            }, 1000);
+        }
+        document.addEventListener("visibilitychange", () => {
+            if (!document.hidden) updateCountdown();
+        });
 
-            <div id="progressText" class="progress-text">
-                Loading...
-            </div>
-
-        </div>
-
-        <div class="milestones">
-            <div class="milestone">✅ Tickets secured</div>
-            <div class="milestone">🏠 Home city: Łódź</div>
-            <div class="milestone">🎶 Sting live</div>
-        </div>
-
-        <div class="quote">
-            Every day closer to concert night...
-        </div>
-
-    </section>
-
-</div>
-
-<script>
-const purchaseDate = new Date("2026-10-21T00:00:00");
-const concertDate = new Date("2027-06-10T19:00:00");
-
-function updateCountdown() {
-
-    const now = new Date();
-    const diff = concertDate - now;
-
-    if (diff <= 0) {
-        document.body.innerHTML = `
-            <h1 style="
-                color:white;
-                text-align:center;
-                font-family:Segoe UI,sans-serif;
-                padding-top:15vh;">
-                🎸 Concert Day Has Arrived 🎸
-            </h1>`;
-        return;
-    }
-
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-
-    document.getElementById("days").textContent = days;
-    document.getElementById("hours").textContent = hours;
-    document.getElementById("minutes").textContent = minutes;
-    document.getElementById("seconds").textContent = seconds;
-
-    const total = concertDate - purchaseDate;
-    const elapsed = now - purchaseDate;
-
-    const percent =
-        Math.max(0, Math.min(100,
-        (elapsed / total) * 100));
-
-    document.getElementById("progressFill")
-        .style.width = percent + "%";
-
-    document.getElementById("progressText")
-        .textContent =
-        `${percent.toFixed(1)}% of waiting period completed`;
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-</script>
-
+        const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+        function syncParticles() {
+            const particles = document.getElementById("particles");
+            particles.replaceChildren();
+            if (motionPreference.matches) return;
+            const fragment = document.createDocumentFragment();
+            for (let index = 0; index < 22; index++) {
+                const particle = document.createElement("span");
+                particle.className = "particle";
+                particle.style.setProperty("--x", `${Math.random() * 100}%`);
+                particle.style.setProperty("--duration", `${14 + Math.random() * 18}s`);
+                particle.style.setProperty("--delay", `${-Math.random() * 32}s`);
+                particle.style.setProperty("--size", `${1 + Math.random() * 2}px`);
+                fragment.appendChild(particle);
+            }
+            particles.appendChild(fragment);
+        }
+        syncParticles();
+        motionPreference.addEventListener("change", syncParticles);
+    </script>
 </body>
 </html>
