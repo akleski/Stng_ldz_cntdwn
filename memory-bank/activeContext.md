@@ -3,17 +3,26 @@
 **Updated:** 2026-10-22
 
 ## Current focus
-Phase 2: add four easter eggs, one commit each, tracked in `tasks/`. Planning is complete. No egg code written yet.
+Phase 2: four planned easter eggs, plus six trivia upgrades tracked in [the task index](tasks/_index.md). TASK005-TASK010 were added from the selected future-upgrades list; all remain Pending at 0%. This update only creates plans, not application features.
 
 ## Recent changes (from git history)
 - 2026-10-21 `fb58aa4` initial commit, `25d2bbc` premium microsite redesign, `be47fd5` PL default + EN/PL toggle.
 - 2026-10-22 `2aae9dc` / `fe4ef2f` / `2e137c9` Sting YouTube playlist player and copy trim, `973ff08` README.
 - 2026-10-22 audit: no existing easter eggs. Only surprise was the concert-day text swap.
+- `a0351cb` shipped ten bilingual Sting trivia records with automatic 20-second rotation. New trivia tasks extend that existing card.
 
 ## Next steps
 1. Commit the memory bank itself (`docs: add memory bank for easter-egg plan`) once the user approves the plan.
 2. TASK001 -> TASK002 -> TASK003 -> TASK004, strictly in that order (shared helpers).
 3. After each task: verify, update task file + `_index.md` + `progress.md` + this file, then commit with a `/caveman-commit` style message.
+4. Trivia track is independent of easter eggs: TASK005 supplies JSON/category IDs for TASK007 and TASK010; TASK006 supplies manual selection for TASK010. TASK008 and TASK009 can start with the existing card.
+
+## Trivia planning assumptions
+- Keep automatic rotation; manual selection restarts the 20-second interval.
+- Embedded JSON preserves direct local-file use without fetch restrictions.
+- "Fact #17 of 63" means dataset position, not viewed count; values are illustrative.
+- Store only the last fact ID to avoid consecutive repeats in one browser/origin; no cross-device synchronization or full history is planned.
+- These are implementation defaults recorded for future work, not additional user-confirmed behavior.
 
 ## Active decisions
 - Konami code is desktop-only, so triple-click/triple-tap on "STING" is the equivalent for phones.
