@@ -4,7 +4,6 @@
 _None_
 
 ## Pending
-- [TASK001] Heart spark burst - Click/Enter the ❤️ for gold + emerald sparks; introduces FX layer and `burst()` helper
 - [TASK002] Beams + spoken dedication egg - Konami or triple-click/tap STING; five random bilingual memories, explicit local-only Read aloud, preferred male voice + selector; omits exact family dates/times; introduces toast
 - [TASK003] Song wink - Styled console message and footer dot cycling Sting song titles (reuses toast)
 - [TASK004] Concert-day confetti - Celebration on arrival, replayable via closing ✦ (reuses FX layer + burst)
@@ -16,7 +15,7 @@ _None_
 - [TASK010](TASK010-trivia-repeat-prevention.md) Remember last fact - Browser-local consecutive-repeat prevention; depends on TASK005 and TASK006
 
 ## Completed
-_None_
+- [TASK001] Heart spark burst - Completed 2026-10-22; desktop/mobile, keyboard, PL/EN and reduced-motion checks passed
 
 ## Abandoned
 _None_

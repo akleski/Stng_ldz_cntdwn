@@ -11,12 +11,12 @@
 - Ten bilingual Sting trivia records rotate every 20 seconds (`a0351cb`).
 
 ## In progress
-- Nothing started. Phase 2 plan written.
+- TASK001 verified and ready for its separate commit. TASK002 is next.
 
 ## What's left (Phase 2: easter eggs)
 | Task | Egg | Status |
 |------|-----|--------|
-| TASK001 | Heart spark burst | Pending |
+| TASK001 | Heart spark burst | Completed |
 | TASK002 | Konami / triple-tap STING: beams + five random bilingual memories + optional local TTS | Pending |
 | TASK003 | Song wink: console message + footer dot titles | Pending |
 | TASK004 | Concert-day confetti celebration | Pending |
@@ -35,7 +35,7 @@ All six tasks are planning-only, Pending at 0%; no trivia upgrade code has been 
 | [TASK010](tasks/TASK010-trivia-repeat-prevention.md) | Browser-local consecutive-repeat prevention | Pending | TASK005, TASK006 |
 
 ## Commit log (Phase 2)
-_None yet. Append `hash subject` per task as each lands._
+- TASK001: `feat: add heart click spark burst` (hash recorded after committing).
 
 ## Known issues
 - `.github/` is gitignored, so local instruction files are not shared via the repo.

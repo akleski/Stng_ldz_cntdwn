@@ -164,8 +164,30 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
 .names .adam, .names .monika { padding: 0 0.15em; }
 .heart {
     display: inline-block;
+    border: 0;
+    padding: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
     font-size: 0.8em;
+    cursor: pointer;
     animation: heartbeat 2.4s ease-in-out infinite;
+}
+
+.fx-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    overflow: hidden;
+}
+.spark {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px currentColor;
+    will-change: transform, opacity;
 }
 
 /* Both panels sit in the foreground, below the arena and skyline. */
