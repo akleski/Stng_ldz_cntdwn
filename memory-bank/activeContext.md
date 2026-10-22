@@ -3,7 +3,7 @@
 **Updated:** 2026-10-22
 
 ## Current focus
-Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being implemented in separate commits, with exactly 87 sourced bilingual records. Latest completed item: TASK008. No Copilot co-author trailers and no push. See [task index](tasks/_index.md) for remaining work.
+Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being implemented in separate commits, with exactly 87 sourced bilingual records. Latest completed item: TASK009. No Copilot co-author trailers and no push. See [task index](tasks/_index.md) for remaining work.
 
 ## Recent changes (from git history)
 - 2026-10-21 `fb58aa4` initial commit, `25d2bbc` premium microsite redesign, `be47fd5` PL default + EN/PL toggle.
@@ -54,3 +54,7 @@ Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being impl
 ## TASK008 implemented
 - Added a 180 ms opacity fade between trivia facts via one shared render path: only badge, title and text fade, rapid requests share a single pending render, language change or reduced motion cancels it and renders immediately.
 - Verification: 62/53 browser checks at 1440px and 390px (normal and reduced motion, rapid clicks, language switch mid-fade, timer fades); live CDP check that toggling reduced motion mid-fade shows the fact immediately; no overflow or exceptions.
+
+## TASK009 implemented
+- Added a localized fact indicator (Ciekawostka #N z M / Fact #N of M) derived from the selected record position and live dataset length, rendered with the badge, title and text and hidden without a valid record.
+- Verification: 70/61 browser checks at 1440px and 390px incl. all 87 records in PL and EN, first/last, wraparound, language/manual selection, total following dataset size, single/empty/broken fallbacks; screenshots inspected at both widths.

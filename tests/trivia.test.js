@@ -114,7 +114,7 @@
             assert(shown.size === 12, 'All six categories render localized badges in PL and EN');
             triviaIndex = 0;
             setLanguage('pl');
-            assert(getComputedStyle(badge).display === 'inline-block' && badge.textContent.length > 0, 'Badge is visible text, not color only');
+            assert(getComputedStyle(badge).display !== 'none' && badge.textContent.length > 0, 'Badge is visible text, not color only');
             assert(badge.getBoundingClientRect().right <= innerWidth, 'Badge fits the viewport');
             const before = badge.textContent;
             setLanguage('en');
@@ -179,8 +179,54 @@
             }
             setLanguage('pl');
         }
+        if (testTask >= 9) {
+            const count = document.getElementById('triviaCount');
+            const meta = document.getElementById('triviaMeta');
+            const total = stingTrivia.length;
+            const label = (locale, index, size = total) => locale === 'pl' ? `Ciekawostka #${index + 1} z ${size}` : `Fact #${index + 1} of ${size}`;
+            for (const locale of ['pl', 'en']) {
+                setLanguage(locale);
+                for (let index = 0; index < total; index++) {
+                    triviaIndex = index;
+                    updateTrivia();
+                    if (meta.hidden || count.textContent !== label(locale, index)) throw new Error(`Wrong ${locale} indicator at ${index}`);
+                }
+            }
+            assert(true, 'Every record shows its one-based dataset position in PL and EN');
+            setLanguage('en');
+            triviaIndex = 0;
+            updateTrivia();
+            assert(count.textContent === `Fact #1 of ${total}`, 'First fact is number 1');
+            triviaIndex = total - 1;
+            updateTrivia();
+            assert(count.textContent === `Fact #${total} of ${total}`, 'Last fact equals the actual total');
+            testIntervals.get(rotationTimers()[0]).callback();
+            await settle();
+            assert(triviaIndex === 0 && count.textContent === `Fact #1 of ${total}`, 'Rotation wraps to number 1');
+            triviaIndex = 16;
+            updateTrivia();
+            setLanguage('pl');
+            assert(triviaIndex === 16 && count.textContent === `Ciekawostka #17 z ${total}`, 'Language switch keeps fact number');
+            document.getElementById('randomTrivia').click();
+            await settle();
+            assert(count.textContent === label('pl', triviaIndex), 'Manual selection updates number with the card');
+            stingTrivia.push({ ...stingTrivia[0], id: 'temporary-extra-fact' });
+            triviaIndex = total;
+            updateTrivia();
+            assert(count.textContent === `Ciekawostka #${total + 1} z ${total + 1}`, 'Total follows dataset size');
+            stingTrivia.pop();
+            triviaIndex = 0;
+            updateTrivia();
+            assert(!/undefined|NaN/.test(count.textContent) && count.getBoundingClientRect().right <= innerWidth, 'Indicator is clean and fits viewport');
+            setLanguage('pl');
+        }
         } else {
             assert(stingTrivia.length === (testDataset === 'single' ? 1 : 0), 'Fallback dataset size');
+            if (testTask >= 9) {
+                const meta = document.getElementById('triviaMeta');
+                assert(testDataset === 'single' ? !meta.hidden && document.getElementById('triviaCount').textContent === 'Ciekawostka #1 z 1' : meta.hidden,
+                    'Indicator hidden without a valid record and exact for one record');
+            }
             if (testTask >= 7 && testDataset !== 'single') assert(document.getElementById('triviaCategory').hidden, 'Fallback fact has no badge');
             if (testTask >= 6) assert(document.getElementById('randomTrivia').hidden, 'Random button hidden without alternatives');
             sameFact();

@@ -73,7 +73,10 @@
                 <h2 id="trivia-heading"><span aria-hidden="true">🎸</span> <span data-en="Sting Trivia">Ciekawostki o Stingu</span></h2>
                 <div class="trivia-card">
                     <div class="trivia-content" id="triviaContent">
-                        <p class="trivia-category" id="triviaCategory" hidden></p>
+                        <div class="trivia-meta" id="triviaMeta" hidden>
+                            <p class="trivia-category" id="triviaCategory" hidden></p>
+                            <p class="trivia-count" id="triviaCount"></p>
+                        </div>
                         <h3 id="triviaTitle">Nauczyciel przed karierą muzyczną</h3>
                         <p id="triviaText">Zanim został Stingiem, Gordon Sumner pracował jako nauczyciel w szkole podstawowej.</p>
                     </div>
@@ -300,6 +303,8 @@
         const triviaTitle = document.getElementById("triviaTitle");
         const triviaText = document.getElementById("triviaText");
         const triviaCategory = document.getElementById("triviaCategory");
+        const triviaCount = document.getElementById("triviaCount");
+        const triviaMeta = document.getElementById("triviaMeta");
         const categoryLabels = {
             career: { pl: "Kariera", en: "Career" },
             police: { pl: "The Police", en: "The Police" },
@@ -322,6 +327,10 @@
             const category = record && categoryLabels[record.category];
             triviaCategory.textContent = category ? category[language] : "";
             triviaCategory.hidden = !category;
+            // Position in the dataset, derived from the selected record, never a hard-coded total.
+            triviaCount.textContent = !record ? "" : language === "pl" ?
+                `Ciekawostka #${triviaIndex + 1} z ${stingTrivia.length}` : `Fact #${triviaIndex + 1} of ${stingTrivia.length}`;
+            triviaMeta.hidden = !record;
             triviaTitle.textContent = trivia.title;
             triviaText.textContent = trivia.text;
         }

@@ -36,7 +36,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 | [TASK006](tasks/TASK006-random-trivia-button.md) | Random Trivia button | Completed | None |
 | [TASK007](tasks/TASK007-trivia-category-badges.md) | Six localized category badges | Completed | TASK005 |
 | [TASK008](tasks/TASK008-trivia-fade-transition.md) | Motion-safe fade between facts | Completed | None |
-| [TASK009](tasks/TASK009-trivia-fact-indicator.md) | Fact number and dataset total | Pending | None |
+| [TASK009](tasks/TASK009-trivia-fact-indicator.md) | Fact number and dataset total | Completed | None |
 | [TASK010](tasks/TASK010-trivia-repeat-prevention.md) | Browser-local consecutive-repeat prevention | Pending | TASK005, TASK006 |
 
 ## Commit log (Phase 2)
@@ -65,3 +65,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 ## TASK008 completion
 - Added a 180 ms opacity fade between trivia facts via one shared render path: only badge, title and text fade, rapid requests share a single pending render, language change or reduced motion cancels it and renders immediately.
 - Verification: 62/53 browser checks at 1440px and 390px (normal and reduced motion, rapid clicks, language switch mid-fade, timer fades); live CDP check that toggling reduced motion mid-fade shows the fact immediately; no overflow or exceptions.
+
+## TASK009 completion
+- Added a localized fact indicator (Ciekawostka #N z M / Fact #N of M) derived from the selected record position and live dataset length, rendered with the badge, title and text and hidden without a valid record.
+- Verification: 70/61 browser checks at 1440px and 390px incl. all 87 records in PL and EN, first/last, wraparound, language/manual selection, total following dataset size, single/empty/broken fallbacks; screenshots inspected at both widths.

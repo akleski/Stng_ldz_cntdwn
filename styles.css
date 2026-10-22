@@ -337,9 +337,21 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
 }
 .trivia-content { transition: opacity 0.18s ease; }
 .trivia-content.is-fading { opacity: 0; }
+.trivia-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.75rem;
+    margin-bottom: 0.7rem;
+}
+.trivia-meta[hidden] { display: none; }
+.trivia-card .trivia-count {
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+}
 .trivia-card .trivia-category {
     display: inline-block;
-    margin-bottom: 0.7rem;
     padding: 0.2rem 0.7rem;
     border: 1px solid rgba(251, 191, 36, 0.55);
     border-radius: 999px;
