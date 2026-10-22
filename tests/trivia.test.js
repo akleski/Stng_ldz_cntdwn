@@ -5,6 +5,7 @@
         checks.push(message);
     };
     const wait = () => new Promise(resolve => setTimeout(resolve, 400));
+    const rotationTimers = () => [...testIntervals].filter(([, timer]) => timer.delay === 20000).map(([id]) => id);
     const sameFact = () => {
         const copy = (stingTrivia[triviaIndex] || triviaFallback)[language];
         assert(triviaTitle.textContent === copy.title && triviaText.textContent === copy.text,
@@ -63,7 +64,6 @@
         sameFact();
         if (testTask >= 6) {
             const button = document.getElementById('randomTrivia');
-            const rotationTimers = () => [...testIntervals].filter(([, timer]) => timer.delay === 20000).map(([id]) => id);
             assert(button.tagName === 'BUTTON' && button.type === 'button' && !button.hidden, 'Native visible random button');
             assert(button.textContent === 'Losowa ciekawostka', 'Polish button label');
             assert(button.getBoundingClientRect().height >= 40 && button.getBoundingClientRect().right <= innerWidth, 'Button is touch-sized and fits viewport');
@@ -91,8 +91,50 @@
             assert(triviaIndex === (selectedByButton + 1) % stingTrivia.length, 'Automatic rotation continues after manual selection');
             assert(button.tabIndex === 0 && getComputedStyle(button).outlineStyle !== undefined, 'Button is keyboard focusable');
         }
+        if (testTask >= 7) {
+            const badge = document.getElementById('triviaCategory');
+            const expected = {
+                career: ['Kariera', 'Career'], police: ['The Police', 'The Police'],
+                personal: ['Życie prywatne', 'Personal Life'], awards: ['Nagrody', 'Awards'],
+                movies: ['Filmy', 'Movies'], activism: ['Aktywizm', 'Activism']
+            };
+            const shown = new Set();
+            for (const [localeIndex, locale] of ['pl', 'en'].entries()) {
+                setLanguage(locale);
+                for (let index = 0; index < stingTrivia.length; index++) {
+                    triviaIndex = index;
+                    updateTrivia();
+                    const label = expected[stingTrivia[index].category][localeIndex];
+                    if (badge.hidden || badge.textContent !== label) throw new Error(`Wrong ${locale} badge at ${index}`);
+                    shown.add(`${locale}:${stingTrivia[index].category}`);
+                }
+            }
+            assert(shown.size === 12, 'All six categories render localized badges in PL and EN');
+            triviaIndex = 0;
+            setLanguage('pl');
+            assert(getComputedStyle(badge).display === 'inline-block' && badge.textContent.length > 0, 'Badge is visible text, not color only');
+            assert(badge.getBoundingClientRect().right <= innerWidth, 'Badge fits the viewport');
+            const before = badge.textContent;
+            setLanguage('en');
+            assert(badge.textContent !== before && triviaIndex === 0, 'Badge translates without selecting another fact');
+            document.getElementById('randomTrivia').click();
+            sameFact();
+            assert(badge.textContent === expected[stingTrivia[triviaIndex].category][1], 'Badge updates atomically on manual selection');
+            testIntervals.get(rotationTimers()[0]).callback();
+            sameFact();
+            assert(badge.textContent === expected[stingTrivia[triviaIndex].category][1], 'Badge updates atomically on automatic selection');
+            stingTrivia.push({ ...stingTrivia[0], category: 'unknown' });
+            triviaIndex = stingTrivia.length - 1;
+            updateTrivia();
+            assert(badge.hidden && badge.textContent === '' && !triviaTitle.textContent.includes('undefined'), 'Missing metadata hides badge without undefined text');
+            stingTrivia.pop();
+            triviaIndex = 0;
+            updateTrivia();
+            setLanguage('pl');
+        }
         } else {
             assert(stingTrivia.length === (testDataset === 'single' ? 1 : 0), 'Fallback dataset size');
+            if (testTask >= 7 && testDataset !== 'single') assert(document.getElementById('triviaCategory').hidden, 'Fallback fact has no badge');
             if (testTask >= 6) assert(document.getElementById('randomTrivia').hidden, 'Random button hidden without alternatives');
             sameFact();
             setLanguage('en');

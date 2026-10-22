@@ -1,6 +1,6 @@
 # TASK007 - Trivia category badges
 
-**Status:** Pending  
+**Status:** Completed  
 **Added:** 2026-10-22  
 **Updated:** 2026-10-22
 
@@ -25,15 +25,19 @@
 
 ## Progress Tracking
 
-**Overall Status:** Not Started - 0%
+**Overall Status:** Completed - 100%
 
 ### Subtasks
 | ID | Description | Status | Updated | Notes |
 |----|-------------|--------|---------|-------|
-| 7.1 | Define bilingual category label mapping | Not Started | 2026-10-22 | Depends on TASK005 |
-| 7.2 | Add badge markup, styling, and renderer update | Not Started | 2026-10-22 | Text conveys category |
-| 7.3 | Verify all categories and PL/EN; update memory bank | Not Started | 2026-10-22 | 390px and desktop |
+| 7.1 | Define bilingual category label mapping | Complete | 2026-10-22 | Depends on TASK005 |
+| 7.2 | Add badge markup, styling, and renderer update | Complete | 2026-10-22 | Text conveys category |
+| 7.3 | Verify all categories and PL/EN; update memory bank | Complete | 2026-10-22 | 390px and desktop |
 
 ## Progress Log
 ### 2026-10-22
 - Created from the selected future-upgrades list. Pending category metadata from TASK005.
+
+- Implemented: Added a localized category badge (Kariera/Career, The Police, Życie prywatne/Personal Life, Nagrody/Awards, Filmy/Movies, Aktywizm/Activism) to the trivia card, updated in the same render as title and text; missing metadata hides it.
+- Verified: 48 browser checks at 1440px and 390px incl. all 87 records in PL and EN, atomic manual/automatic updates, unknown-category fallback; live screenshots inspected at both widths (longest PL badge wraps cleanly).
+- Updated task status, subtasks, index, progress and active context in the separate feature commit; no Copilot trailer and no push.

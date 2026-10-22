@@ -72,6 +72,7 @@
             <section class="trivia-section" aria-labelledby="trivia-heading">
                 <h2 id="trivia-heading"><span aria-hidden="true">🎸</span> <span data-en="Sting Trivia">Ciekawostki o Stingu</span></h2>
                 <div class="trivia-card">
+                    <p class="trivia-category" id="triviaCategory" hidden></p>
                     <h3 id="triviaTitle">Nauczyciel przed karierą muzyczną</h3>
                     <p id="triviaText">Zanim został Stingiem, Gordon Sumner pracował jako nauczyciel w szkole podstawowej.</p>
                     <button type="button" class="trivia-button" id="randomTrivia" data-en="Random fact">Losowa ciekawostka</button>
@@ -296,13 +297,26 @@
         let triviaIndex = 0;
         const triviaTitle = document.getElementById("triviaTitle");
         const triviaText = document.getElementById("triviaText");
+        const triviaCategory = document.getElementById("triviaCategory");
+        const categoryLabels = {
+            career: { pl: "Kariera", en: "Career" },
+            police: { pl: "The Police", en: "The Police" },
+            personal: { pl: "Życie prywatne", en: "Personal Life" },
+            awards: { pl: "Nagrody", en: "Awards" },
+            movies: { pl: "Filmy", en: "Movies" },
+            activism: { pl: "Aktywizm", en: "Activism" }
+        };
         const triviaFallback = {
             pl: { title: triviaTitle.textContent, text: triviaText.textContent },
             en: { title: "Teacher before a music career", text: "Before his music career, Gordon Sumner worked as a primary-school teacher." }
         };
 
         function updateTrivia() {
-            const trivia = (stingTrivia[triviaIndex] || triviaFallback)[language];
+            const record = stingTrivia[triviaIndex];
+            const trivia = (record || triviaFallback)[language];
+            const category = record && categoryLabels[record.category];
+            triviaCategory.textContent = category ? category[language] : "";
+            triviaCategory.hidden = !category;
             triviaTitle.textContent = trivia.title;
             triviaText.textContent = trivia.text;
         }

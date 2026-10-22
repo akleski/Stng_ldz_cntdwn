@@ -34,7 +34,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 |------|---------|--------|---------------|
 | [TASK005](tasks/TASK005-expanded-trivia-json.md) | 87 verified bilingual JSON records | Completed | None |
 | [TASK006](tasks/TASK006-random-trivia-button.md) | Random Trivia button | Completed | None |
-| [TASK007](tasks/TASK007-trivia-category-badges.md) | Six localized category badges | Pending | TASK005 |
+| [TASK007](tasks/TASK007-trivia-category-badges.md) | Six localized category badges | Completed | TASK005 |
 | [TASK008](tasks/TASK008-trivia-fade-transition.md) | Motion-safe fade between facts | Pending | None |
 | [TASK009](tasks/TASK009-trivia-fact-indicator.md) | Fact number and dataset total | Pending | None |
 | [TASK010](tasks/TASK010-trivia-repeat-prevention.md) | Browser-local consecutive-repeat prevention | Pending | TASK005, TASK006 |
@@ -57,3 +57,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 ## TASK006 completion
 - Added a native bilingual Random fact button to the existing trivia card. It picks a different fact (no retry loop), restarts the single 20-second rotation timer, keeps the selected fact across PL/EN, and hides when fewer than two records exist.
 - Verification: 39 browser checks at 1440px and 390px (300 rapid clicks never repeat, single timer, language preservation, hidden for empty/single data); live CDP Enter, Space and touch activation passed; screenshots inspected at both widths.
+
+## TASK007 completion
+- Added a localized category badge (Kariera/Career, The Police, Życie prywatne/Personal Life, Nagrody/Awards, Filmy/Movies, Aktywizm/Activism) to the trivia card, updated in the same render as title and text; missing metadata hides it.
+- Verification: 48 browser checks at 1440px and 390px incl. all 87 records in PL and EN, atomic manual/automatic updates, unknown-category fallback; live screenshots inspected at both widths (longest PL badge wraps cleanly).
