@@ -1,6 +1,6 @@
 # TASK004 - Concert-day confetti
 
-**Status:** Pending  
+**Status:** Completed  
 **Added:** 2026-10-22  
 **Updated:** 2026-10-22
 
@@ -24,18 +24,22 @@ Add a proper concert-day celebration with confetti instead of just a text swap. 
 
 ## Progress Tracking
 
-**Overall Status:** Not Started - 0%
+**Overall Status:** Completed - 100%
 
 ### Subtasks
 | ID | Description | Status | Updated | Notes |
 |----|-------------|--------|---------|-------|
-| 4.1 | Confetti generator (gold/emerald/white, gravity, rotation) | Not Started | 2026-10-22 | Reuse FX layer |
-| 4.2 | Fire once on arrival (live tick + late load) | Not Started | 2026-10-22 | No repeat per second |
-| 4.3 | Replay via closing ✦ (post-arrival only) | Not Started | 2026-10-22 | Bilingual aria-label |
-| 4.4 | Reduced-motion gate + piece cap | Not Started | 2026-10-22 | |
-| 4.5 | Verify with CDP Date override (live tick + late load), desktop/mobile | Not Started | 2026-10-22 | Temp script in %TEMP% |
-| 4.6 | Update memory bank and commit | Not Started | 2026-10-22 | Suggested: `feat: add concert-day confetti celebration` |
+| 4.1 | Confetti generator (gold/emerald/white, gravity, rotation) | Complete | 2026-10-22 | Shared FX layer; three origins, under 6 seconds |
+| 4.2 | Fire once on arrival (live tick + late load) | Complete | 2026-10-22 | One-shot trigger and timer clearing verified |
+| 4.3 | Replay via closing ✦ (post-arrival only) | Complete | 2026-10-22 | Native Enter replay; disabled before arrival |
+| 4.4 | Reduced-motion gate + piece cap | Complete | 2026-10-22 | 150-node cap; replay resets instead of stacking |
+| 4.5 | Verify with CDP Date override (live tick + late load), desktop/mobile | Complete | 2026-10-22 | Eight Edge configurations passed |
+| 4.6 | Update memory bank and commit | Complete | 2026-10-22 | `feat: add concert-day confetti celebration` |
 
 ## Progress Log
 ### 2026-10-22
-- Task created and planned. No code written.
+- Task created and planned.
+- Extended `burst()` with rising/falling and rotating confetti in gold, emerald and white. `celebrate()` clears old animations before three 50-piece launches, keeping at most 150 nodes; cleanup completes in under six seconds.
+- Wired automatic celebration into the existing arrival transition; closing ✦ remains disabled until arrival and then supports native keyboard replay. Reduced motion suppresses effects, not the completed countdown or replay control.
+- Eight Edge CDP configurations passed (1440px/390px, both motion modes, live tick/late load): no early replay, one automatic launch, zeroed countdown, 100% progress, timeline/caption state, timer clearing, PL/EN, cleanup, repeated replay cap and live motion changes. No shipped clock override or other test hooks.
+- Inspected desktop/mobile celebration screenshots. Re-ran all heart, dedication and song checks after extending the shared FX helper; all 13 regression configurations passed. Updated task table, index, progress, active context, architecture notes and README for the final separate egg commit.

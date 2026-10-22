@@ -290,6 +290,12 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
     pointer-events: none;
     overflow: hidden;
 }
+.confetti {
+    position: absolute;
+    width: 7px;
+    height: 10px;
+    will-change: transform, opacity;
+}
 .spark {
     position: absolute;
     width: 5px;
@@ -578,7 +584,16 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
     padding: clamp(3rem, 8vw, 6rem) 1.25rem;
     text-align: center;
 }
-.closing-spark { color: var(--gold); font-size: 1.4rem; }
+.closing-spark {
+    border: 0;
+    padding: 0;
+    background: none;
+    color: var(--gold);
+    font: inherit;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+.closing-spark:disabled { cursor: default; }
 .closing p { margin-top: 1rem; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 700; }
 .closing em { color: var(--gold-soft); font-weight: 500; }
 .closing-note { display: block; margin-top: 1.2rem; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.26em; }

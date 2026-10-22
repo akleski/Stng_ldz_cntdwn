@@ -17,7 +17,9 @@ Static single page. All behaviour lives in one inline `<script>` at the end of `
 
 ## Easter-egg patterns (Phase 2)
 - **FX layer:** one `position: fixed; inset: 0; pointer-events: none` container (`.fx-layer`, `aria-hidden`) for sparks and confetti. Created in TASK001, reused by TASK004.
-- **Burst helper:** `burst(x, y, options)` in the inline script, using the Web Animations API on short-lived spans. Removes nodes on finish. No-op under reduced motion. Reused by TASK004.
+- **Burst helper:** `burst(x, y, options)` uses WAAPI on short-lived spans. Removes nodes on finish/cancel; motion changes cancel all active FX. Sparks cap at 120 nodes; confetti caps the shared layer at 150. `celebrate()` resets the layer and launches three 50-piece bursts with rotation/gravity, completing in under six seconds.
+- **Arrival:** the existing `concertArrived` transition enables closing ✦ replay and calls `celebrate()` once, including late loads. Replay stays disabled before arrival. No clock override or test hooks ship.
+- **Startup:** language/countdown initialization follows all egg state declarations so late-load celebration and dedication localization cannot access uninitialized helpers.
 - **Toast:** one non-interactive `role="status"` element (`.toast`), auto-hides, used for TASK003 song hints. Created in TASK002.
 - **Dedication:** separate persistent panel in TASK002 with five stable-ID bilingual memories, shuffled without repeats. Translate the selected ID when language changes. Explicit Read aloud/Stop and a matching-language local voice selector; Close/new memory/language switch/page hide cancel speech. Prefer male voice names as hints, never promise gender; no matching local voice means text-only.
 - **Privacy:** no exact relationship dates/times in page content or tracked documents; approved milestone names and Tymon only.

@@ -11,16 +11,20 @@
 - Ten bilingual Sting trivia records rotate every 20 seconds (`a0351cb`).
 
 ## In progress
-- TASK003 verified and ready for its separate commit. TASK004 is next.
-- Heart sparks, dedication memories, arena beams and local-only narration work. Audible output still needs a manual device check.
+_None. All four Phase 2 eggs are implemented and browser-verified._
 
-## What's left (Phase 2: easter eggs)
+## Phase 2 verification
+- Heart sparks, arena beams, five shuffled bilingual memories, local-only narration, song wink and concert-day confetti are complete.
+- Edge CDP checks cover 1440px/390px, PL/EN, both motion preferences, keyboard/touch/mouse, narration mocks and live/late concert arrival. Screenshots inspected; no browser exceptions or layout overflow.
+- Actual device voice availability and audible narration remain manual checks. No remote voices, autoplay, private relationship dates, lyrics or shipped test hooks.
+
+## Phase 2 status
 | Task | Egg | Status |
 |------|-----|--------|
 | TASK001 | Heart spark burst | Completed |
 | TASK002 | Konami / triple-tap STING: beams + five random bilingual memories + optional local TTS | Completed |
 | TASK003 | Song wink: console message + footer dot titles | Completed |
-| TASK004 | Concert-day confetti celebration | Pending |
+| TASK004 | Concert-day confetti celebration | Completed |
 
 ## What's left (trivia upgrades)
 
@@ -38,8 +42,10 @@ All six tasks are planning-only, Pending at 0%; no trivia upgrade code has been 
 ## Commit log (Phase 2)
 - `19df3bf feat: add heart click spark burst`
 - `178eb96 feat: add spoken dedication and arena beams`
-- TASK003: `feat: add song title wink in footer and console` (hash recorded after committing).
+- `3bf6972 feat: add song title wink in footer and console`
+- TASK004: `feat: add concert-day confetti celebration` (the commit containing this completion entry; locate by subject).
 
 ## Known issues
 - `.github/` is gitignored, so local instruction files are not shared via the repo.
-- Headless Edge cannot go below ~500px wide; use the iframe wrapper for 390px checks.
+- Headless Edge's window minimum is bypassed by CDP device metrics for true 390px viewport checks.
+- Local voice availability and perceived voice gender vary by device; text-only fallback is intentional.

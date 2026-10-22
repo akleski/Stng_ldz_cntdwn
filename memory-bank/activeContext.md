@@ -3,18 +3,19 @@
 **Updated:** 2026-10-22
 
 ## Current focus
-Phase 2: TASK001-TASK003 complete and verified. TASK004 is next. Each egg stays in its own commit with memory-bank updates. Six independent trivia upgrades are tracked in [the task index](tasks/_index.md); TASK005-TASK010 remain planning-only, Pending at 0%.
+Phase 2 easter eggs complete: all four eggs implemented and browser-verified, each in a separate feature commit with memory-bank updates. Six independent trivia upgrades are tracked in [the task index](tasks/_index.md); TASK005-TASK010 remain planning-only, Pending at 0%.
 
 ## Recent changes (from git history)
 - 2026-10-21 `fb58aa4` initial commit, `25d2bbc` premium microsite redesign, `be47fd5` PL default + EN/PL toggle.
 - 2026-10-22 `2aae9dc` / `fe4ef2f` / `2e137c9` Sting YouTube playlist player and copy trim, `973ff08` README.
-- 2026-10-22 audit: no existing easter eggs. Only surprise was the concert-day text swap.
+- 2026-10-22 initial audit found no eggs. Phase 2 added heart sparks, Konami/triple-activation arena beams and five memories with local-only narration, song-title hints and concert-day confetti.
+- Verified at 1440px and 390px, PL/EN and both motion modes; concert arrival checked via non-shipped CDP clock overrides.
 - `a0351cb` shipped ten bilingual Sting trivia records with automatic 20-second rotation. New trivia tasks extend that existing card.
 
 ## Next steps
-1. Memory-bank plan already committed as `f660fd2`; user authorized all four eggs.
-2. Implement TASK004 using the shared FX layer; verify live arrival and post-date load via CDP Date override.
-3. After each task: verify, update task file + `_index.md` + `progress.md` + this file, then commit with a `/caveman-commit` style message.
+1. Manually check available local voices and audible narration on the intended desktop/mobile devices; browser mocks verified selection and lifecycle, not sound.
+2. Optional: revise the approved memory wording if desired, keeping exact private dates/times excluded.
+3. No push performed. Publish the local feature commits only when requested.
 4. Trivia track is independent of easter eggs: TASK005 supplies JSON/category IDs for TASK007 and TASK010; TASK006 supplies manual selection for TASK010. TASK008 and TASK009 can start with the existing card.
 
 ## Trivia planning assumptions

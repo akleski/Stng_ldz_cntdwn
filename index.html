@@ -102,7 +102,7 @@
         </section>
 
         <section class="closing" aria-label="Koncertowy wieczór we dwoje" data-en-aria-label="A concert night for two">
-            <span class="closing-spark" aria-hidden="true">✦</span>
+            <button type="button" class="closing-spark" id="replayCelebration" aria-label="Powtórz świętowanie" data-en-aria-label="Replay celebration" disabled>✦</button>
             <p><span data-en="Some nights are worth">Na niektóre wieczory</span> <em data-en="waiting for.">warto czekać.</em></p>
             <span class="closing-note"><span class="adam">ADAM</span> <span aria-hidden="true">&</span> <span class="monika">MONIKA</span> · ŁÓDŹ 2027</span>
         </section>
@@ -286,6 +286,8 @@
                 document.getElementById("waitingIcon").classList.remove("current");
                 document.getElementById("waitingIcon").classList.add("completed");
                 document.getElementById("concertIcon").classList.add("completed");
+                document.getElementById("replayCelebration").disabled = false;
+                celebrate();
             }
             return diff;
         }
@@ -311,13 +313,26 @@
                     index % 2 === 0 ? "var(--gold-soft)" : "var(--emerald-soft)";
                 const angle = Math.random() * Math.PI * 2;
                 const distance = 40 + Math.random() * 100;
-                const dx = Math.cos(angle) * distance;
+                const dx = confetti ? (innerWidth / 2 - x) * 0.6 + (Math.random() - 0.5) * innerWidth * 0.6 :
+                    Math.cos(angle) * distance;
                 const dy = Math.sin(angle) * distance;
+                const peak = y > innerHeight / 2 ? -innerHeight * (0.5 + Math.random() * 0.3) : -40;
+                const spin = Math.random() * 720 - 360;
+                if (confetti) piece.style.borderRadius = index % 3 === 0 ? "50%" : "1px";
+                piece.style.color = piece.style.background;
                 fxLayer.appendChild(piece);
-                const animation = piece.animate([
+                const frames = confetti ? [
+                    { transform: "translate(-50%, -50%) rotate(0deg)", opacity: 1, offset: 0, easing: "ease-out" },
+                    { transform: `translate(calc(-50% + ${dx * 0.4}px), ${peak}px) rotate(${spin * 0.3}deg)`, opacity: 1, offset: 0.3, easing: "ease-in" },
+                    { transform: `translate(calc(-50% + ${dx}px), ${innerHeight - y + 80}px) rotate(${spin}deg)`, opacity: 0, offset: 1 }
+                ] : [
                     { transform: "translate(-50%, -50%) scale(1)", opacity: 1 },
                     { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.2)`, opacity: 0 }
-                ], { duration: duration + Math.random() * 300, easing: "cubic-bezier(0.1, 0.6, 0.3, 1)" });
+                ];
+                const animation = piece.animate(frames, {
+                    duration: duration + Math.random() * 300,
+                    easing: confetti ? "linear" : "cubic-bezier(0.1, 0.6, 0.3, 1)"
+                });
                 animation.onfinish = animation.oncancel = () => piece.remove();
             }
         }
@@ -564,6 +579,16 @@
             }
             particles.appendChild(fragment);
         }
+        function celebrate() {
+            if (!concertArrived || motionPreference.matches) return;
+            clearEffects();
+            const options = { count: 50, confetti: true, duration: 5600 };
+            burst(0, innerHeight, options);
+            burst(innerWidth, innerHeight, options);
+            burst(innerWidth / 2, 0, options);
+        }
+        document.getElementById("replayCelebration").addEventListener("click", celebrate);
+
         const songs = ["Roxanne", "Englishman in New York", "Fields of Gold", "Shape of My Heart", "Every Breath You Take", "Desert Rose"];
         let songIndex = 0;
         document.querySelector(".footer-dot").addEventListener("click", () => {
