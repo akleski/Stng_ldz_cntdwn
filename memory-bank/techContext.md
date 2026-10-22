@@ -11,7 +11,8 @@
 ## Trivia regression checks
 - `tests/run-trivia.ps1` runs `tests/trivia.test.js` in an installed Chromium browser, without Node or package dependencies. Override the executable with `-Chrome`.
 - Temporary local page/profile, exact-width iframe for 1440px/390px, optional real reduced-motion browser flag; interval registration/callbacks are deterministic. Broken, empty and single-record dataset variants exercise startup fallback. Temporary artifacts are removed.
-- Run with `-Task 5` through `-Task 10` as each feature is introduced; tests remain cumulative. Browser assertions verify title/text localization, selection, countdown initialization and no overflow/exceptions.
+- Run with `-Task 5` through `-Task 10` as each feature is introduced; tests remain cumulative. Browser assertions verify title/text localization, selection, badges, fade, numbering, repeat prevention, countdown initialization and no overflow/exceptions.
+- Variants: `-Width 390`, `-ReducedMotion`, `-Dataset broken|empty|single`, `-Storage blocked|corrupt|stale`. Real reload, keyboard, touch and live reduced-motion toggling were additionally verified over CDP against a local `python -m http.server` (script kept outside the repo).
 
 ## Verification approach (easter eggs)
 1. Static: view diffs, confirm no console errors.

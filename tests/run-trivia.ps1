@@ -3,6 +3,7 @@ param(
     [int]$Width = 1440,
     [switch]$ReducedMotion,
     [ValidateSet('normal', 'broken', 'empty', 'single')][string]$Dataset = 'normal',
+    [ValidateSet('available', 'blocked', 'corrupt', 'stale')][string]$Storage = 'available',
     [string]$Chrome = "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe"
 )
 $ErrorActionPreference = 'Stop'
@@ -15,6 +16,14 @@ $bootstrap = @"
 <script>
 window.testTask = $Task;
 window.testDataset = '$Dataset';
+window.testStorage = '$Storage';
+if (testStorage === 'blocked') {
+    Object.defineProperty(window, 'localStorage', { get() { throw new DOMException('Storage blocked', 'SecurityError'); } });
+} else if (testStorage === 'corrupt') {
+    localStorage.setItem('sting-trivia-last-id', '{"corrupt": <<>>');
+} else if (testStorage === 'stale') {
+    localStorage.setItem('sting-trivia-last-id', 'removed-fact-id');
+}
 window.testWidth = $Width;
 window.testReducedMotion = $($ReducedMotion.IsPresent.ToString().ToLower());
 window.testErrors = [];

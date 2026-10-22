@@ -1,6 +1,6 @@
 # TASK010 - Remember trivia and prevent consecutive repeats
 
-**Status:** Pending  
+**Status:** Completed  
 **Added:** 2026-10-22  
 **Updated:** 2026-10-22
 
@@ -27,15 +27,19 @@
 
 ## Progress Tracking
 
-**Overall Status:** Not Started - 0%
+**Overall Status:** Completed - 100%
 
 ### Subtasks
 | ID | Description | Status | Updated | Notes |
 |----|-------------|--------|---------|-------|
-| 10.1 | Add guarded last-fact persistence using stable IDs | Not Started | 2026-10-22 | Depends on TASK005 |
-| 10.2 | Unify initial/manual/automatic repeat exclusion | Not Started | 2026-10-22 | Depends on TASK006 |
-| 10.3 | Verify reloads, stale IDs, storage failures; update memory bank | Not Started | 2026-10-22 | Include empty/single datasets |
+| 10.1 | Add guarded last-fact persistence using stable IDs | Complete | 2026-10-22 | Depends on TASK005 |
+| 10.2 | Unify initial/manual/automatic repeat exclusion | Complete | 2026-10-22 | Depends on TASK006 |
+| 10.3 | Verify reloads, stale IDs, storage failures; update memory bank | Complete | 2026-10-22 | Include empty/single datasets |
 
 ## Progress Log
 ### 2026-10-22
 - Created from the selected future-upgrades list. Local-only persistence; no identity-specific history or synchronization.
+
+- Implemented: Persist only the last displayed fact ID under sting-trivia-last-id (separate from the language key). Startup, random and automatic selections exclude the current and saved ID by ID rather than index, so reloads and dataset reorders never immediately repeat a fact; guarded reads/writes with validation and in-memory fallback; empty/single datasets are stable.
+- Verified: 77 browser checks at 1440px and 390px (300 mixed selections never repeat, reorder, stale/corrupt/oversized IDs, blocked storage variant, empty/single/broken datasets); real-browser CDP test of 15 consecutive reloads never showing the previous fact, language persistence and countdown unaffected.
+- Updated task status, subtasks, index, progress and active context in the separate feature commit; no Copilot trailer and no push.

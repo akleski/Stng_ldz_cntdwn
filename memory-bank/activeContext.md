@@ -3,27 +3,27 @@
 **Updated:** 2026-10-22
 
 ## Current focus
-Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being implemented in separate commits, with exactly 87 sourced bilingual records. Latest completed item: TASK009. No Copilot co-author trailers and no push. See [task index](tasks/_index.md) for remaining work.
+Phase 2 easter eggs and all six trivia upgrades (TASK005-TASK010) are complete and browser-verified, each in a separate feature commit with memory-bank updates and no Copilot co-author trailer. Nothing is in progress; no push has been performed.
 
 ## Recent changes (from git history)
 - 2026-10-21 `fb58aa4` initial commit, `25d2bbc` premium microsite redesign, `be47fd5` PL default + EN/PL toggle.
 - 2026-10-22 `2aae9dc` / `fe4ef2f` / `2e137c9` Sting YouTube playlist player and copy trim, `973ff08` README.
 - 2026-10-22 initial audit found no eggs. Phase 2 added heart sparks, Konami/triple-activation arena beams and five memories with local-only narration, song-title hints and concert-day confetti.
 - Verified at 1440px and 390px, PL/EN and both motion modes; concert arrival checked via non-shipped CDP clock overrides.
-- `a0351cb` shipped ten bilingual Sting trivia records with automatic 20-second rotation. New trivia tasks extend that existing card.
+- `a0351cb` shipped ten bilingual Sting trivia records with automatic 20-second rotation.
+- 2026-10-22 trivia upgrades, one commit each: `0c6b37d` 87 sourced bilingual records, `2f19c7a` Random fact button, `aaccf7e` category badges, `f99baea` fade between facts, `74379b7` fact number indicator, and the TASK010 last-fact persistence commit (locate by subject `feat(trivia): remember last fact`).
 
 ## Next steps
 1. Manually check available local voices and audible narration on the intended desktop/mobile devices; browser mocks verified selection and lifecycle, not sound.
 2. Optional: revise the approved memory wording if desired, keeping exact private dates/times excluded.
 3. No push performed. Publish the local feature commits only when requested.
-4. Trivia track is independent of easter eggs: TASK005 supplies JSON/category IDs for TASK007 and TASK010; TASK006 supplies manual selection for TASK010. TASK008 and TASK009 can start with the existing card.
+4. Optional: spot-check a few trivia facts against sources before sharing; every record was fact-checked by independent reviewers and several were corrected, but the dataset is large.
 
-## Trivia planning assumptions
+## Trivia decisions (implemented)
 - Keep automatic rotation; manual selection restarts the 20-second interval.
 - Embedded JSON preserves direct local-file use without fetch restrictions.
-- "Fact #17 of 63" means dataset position, not viewed count; values are illustrative.
-- Store only the last fact ID to avoid consecutive repeats in one browser/origin; no cross-device synchronization or full history is planned.
-- These are implementation defaults recorded for future work, not additional user-confirmed behavior.
+- "Fact #17 of 87" means dataset position, not viewed count; the total comes from the dataset.
+- Only the last fact ID is stored (`sting-trivia-last-id`), per browser/origin; no cross-device sync or history. Selection excludes the current and saved ID by ID, with in-memory fallback when storage is unavailable.
 
 ## Active decisions
 - Konami code is desktop-only, so triple-click/triple-tap on "STING" is the equivalent for phones.
@@ -58,3 +58,7 @@ Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being impl
 ## TASK009 implemented
 - Added a localized fact indicator (Ciekawostka #N z M / Fact #N of M) derived from the selected record position and live dataset length, rendered with the badge, title and text and hidden without a valid record.
 - Verification: 70/61 browser checks at 1440px and 390px incl. all 87 records in PL and EN, first/last, wraparound, language/manual selection, total following dataset size, single/empty/broken fallbacks; screenshots inspected at both widths.
+
+## TASK010 implemented
+- Persist only the last displayed fact ID under sting-trivia-last-id (separate from the language key). Startup, random and automatic selections exclude the current and saved ID by ID rather than index, so reloads and dataset reorders never immediately repeat a fact; guarded reads/writes with validation and in-memory fallback; empty/single datasets are stable.
+- Verification: 77 browser checks at 1440px and 390px (300 mixed selections never repeat, reorder, stale/corrupt/oversized IDs, blocked storage variant, empty/single/broken datasets); real-browser CDP test of 15 consecutive reloads never showing the previous fact, language persistence and countdown unaffected.

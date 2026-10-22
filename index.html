@@ -721,23 +721,50 @@
             showToast(`♫ ${songs[index]}`, index % 2 === 0 ? "gold" : "emerald");
         });
 
-        let savedLanguage = "pl";
-        try { savedLanguage = localStorage.getItem("sting-language") || "pl"; } catch { /* Use Polish when storage is unavailable. */ }
-        setLanguage(savedLanguage);
-        languageSwitch.hidden = false;
+        const triviaStorageKey = "sting-trivia-last-id";
+        let lastTriviaId = null;
         let triviaTimer;
         const randomTrivia = document.getElementById("randomTrivia");
+
+        // Storage may be blocked or hold stale/corrupt data, so only a well-formed string is trusted.
+        function readLastTriviaId() {
+            try {
+                const id = localStorage.getItem(triviaStorageKey);
+                return typeof id === "string" && id.length <= 100 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id) ? id : null;
+            } catch { return null; }
+        }
+
+        function rememberTrivia() {
+            const record = stingTrivia[triviaIndex];
+            if (!record) return;
+            lastTriviaId = record.id;
+            try { localStorage.setItem(triviaStorageKey, record.id); } catch { /* The in-memory ID still prevents repeats. */ }
+        }
+
+        // Chooses by ID rather than index, so the last fact stays excluded after a reload or dataset reorder.
+        // With no alternative (one record) the current fact is kept; there is no retry loop.
+        function pickTriviaIndex(sequential = false) {
+            const avoid = new Set([stingTrivia[triviaIndex]?.id, lastTriviaId, readLastTriviaId()]);
+            const allowed = [];
+            for (let step = 1; step <= stingTrivia.length; step++) {
+                const index = (triviaIndex + step) % stingTrivia.length;
+                if (!avoid.has(stingTrivia[index].id)) allowed.push(index);
+            }
+            if (allowed.length === 0) return triviaIndex;
+            return sequential ? allowed[0] : allowed[Math.floor(Math.random() * allowed.length)];
+        }
 
         function startTriviaRotation() {
             clearInterval(triviaTimer);
             if (stingTrivia.length < 2) return;
-            triviaTimer = setInterval(() => selectTrivia((triviaIndex + 1) % stingTrivia.length, false), 20000);
+            triviaTimer = setInterval(() => selectTrivia(pickTriviaIndex(true), false), 20000);
         }
 
         // Manual picks restart the 20-second timer so a new fact is not replaced immediately.
-        function selectTrivia(index = triviaIndex + 1 + Math.floor(Math.random() * (stingTrivia.length - 1)), restart = true) {
+        function selectTrivia(index = pickTriviaIndex(), restart = true) {
             if (stingTrivia.length === 0) return;
             triviaIndex = index % stingTrivia.length;
+            rememberTrivia();
             updateTrivia(true);
             if (restart) startTriviaRotation();
         }
@@ -746,6 +773,15 @@
 
         randomTrivia.hidden = stingTrivia.length < 2;
         randomTrivia.addEventListener("click", () => selectTrivia());
+        if (stingTrivia.length > 0) {
+            triviaIndex = pickTriviaIndex();
+            rememberTrivia();
+        }
+
+        let savedLanguage = "pl";
+        try { savedLanguage = localStorage.getItem("sting-language") || "pl"; } catch { /* Use Polish when storage is unavailable. */ }
+        setLanguage(savedLanguage);
+        languageSwitch.hidden = false;
         startTriviaRotation();
         console.log(`%c♫ %c${translations[language].consoleWink}`, "color: #F59E0B; font-weight: bold", "color: #10B981");
         if (!concertArrived) {

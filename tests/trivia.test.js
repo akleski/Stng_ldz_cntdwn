@@ -15,6 +15,7 @@
     try {
         assert(innerWidth === testWidth, `Viewport is ${testWidth}px`);
         assert(motionPreference.matches === testReducedMotion, 'Requested motion preference applied');
+        const startup = { id: stingTrivia[triviaIndex]?.id, stored: testStorage === 'blocked' ? null : localStorage.getItem('sting-trivia-last-id') };
         if (testDataset === 'normal') {
         assert(stingTrivia.length === 87, 'Exactly 87 valid records');
         assert(new Set(stingTrivia.map(record => record.id)).size === stingTrivia.length, 'Unique stable IDs');
@@ -220,8 +221,69 @@
             assert(!/undefined|NaN/.test(count.textContent) && count.getBoundingClientRect().right <= innerWidth, 'Indicator is clean and fits viewport');
             setLanguage('pl');
         }
+        if (testTask >= 10) {
+            const key = 'sting-trivia-last-id';
+            const blocked = testStorage === 'blocked';
+            const button = document.getElementById('randomTrivia');
+            const idAt = index => stingTrivia[index].id;
+            assert(!!stingTrivia[triviaIndex], `Startup selects a valid record with ${testStorage} storage`);
+            if (!blocked) assert(startup.stored === startup.id, 'Startup fact ID is stored (stale or corrupt values replaced)');
+            let previousId = idAt(triviaIndex);
+            for (let step = 0; step < 300; step++) {
+                if (step % 2) button.click(); else testIntervals.get(rotationTimers()[0]).callback();
+                const currentId = idAt(triviaIndex);
+                if (currentId === previousId) throw new Error(`Consecutive repeat at step ${step}`);
+                if (!blocked && localStorage.getItem(key) !== currentId) throw new Error(`Stored ID not updated at step ${step}`);
+                previousId = currentId;
+            }
+            assert(true, 'Manual and automatic selections never repeat consecutively');
+            await settle();
+            sameFact();
+            if (!blocked) {
+                const savedIndex = 40;
+                const savedId = idAt(savedIndex);
+                localStorage.setItem(key, savedId);
+                lastTriviaId = null;
+                for (const reversed of [false, true]) {
+                    if (reversed) stingTrivia.reverse();
+                    for (let attempt = 0; attempt < 300; attempt++) {
+                        triviaIndex = attempt % stingTrivia.length;
+                        if (idAt(pickTriviaIndex()) === savedId || idAt(pickTriviaIndex(true)) === savedId) {
+                            throw new Error(`Saved fact ${savedId} was picked after ${reversed ? 'reorder' : 'reload'}`);
+                        }
+                    }
+                    if (reversed) stingTrivia.reverse();
+                }
+                assert(true, 'Saved ID is excluded after reload and dataset reorder');
+                for (const value of ['removed-fact-id', '{"corrupt": <<>>', 'x'.repeat(500), '']) {
+                    localStorage.setItem(key, value);
+                    lastTriviaId = null;
+                    triviaIndex = 3;
+                    const picked = pickTriviaIndex();
+                    if (!(picked >= 0 && picked < stingTrivia.length && picked !== 3)) throw new Error('Stale or corrupt storage broke selection');
+                }
+                assert(true, 'Removed, corrupt and oversized saved IDs are ignored');
+                localStorage.setItem(key, idAt(10));
+                const languageBefore = language;
+                const indexBefore = triviaIndex;
+                setLanguage(language === 'pl' ? 'en' : 'pl');
+                assert(triviaIndex === indexBefore && localStorage.getItem(key) === idAt(10), 'Language switch does not select or store another fact');
+                setLanguage(languageBefore);
+            } else {
+                const brokenStorage = (() => { try { localStorage.getItem(key); return false; } catch { return true; } })();
+                assert(brokenStorage, 'Storage is actually blocked in this variant');
+                assert(readLastTriviaId() === null, 'Blocked reads fall back to in-memory exclusion');
+            }
+            await settle();
+            setLanguage('pl');
+        }
         } else {
             assert(stingTrivia.length === (testDataset === 'single' ? 1 : 0), 'Fallback dataset size');
+            if (testTask >= 10) {
+                const single = stingTrivia.length === 1;
+                assert(pickTriviaIndex() === 0 && pickTriviaIndex(true) === 0, 'Empty/single dataset selection is stable without looping');
+                if (single) assert(testStorage === 'blocked' || localStorage.getItem('sting-trivia-last-id') === stingTrivia[0].id, 'Single record is still remembered when storage works');
+            }
             if (testTask >= 9) {
                 const meta = document.getElementById('triviaMeta');
                 assert(testDataset === 'single' ? !meta.hidden && document.getElementById('triviaCount').textContent === 'Ciekawostka #1 z 1' : meta.hidden,

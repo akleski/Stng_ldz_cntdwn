@@ -8,7 +8,7 @@
 - PL default with EN toggle remembered in `localStorage`.
 - Sting YouTube playlist player below the countdown.
 - Mobile layout verified at 390px.
-- Ten bilingual Sting trivia records rotate every 20 seconds (`a0351cb`).
+- 87 sourced bilingual Sting trivia facts with category badges, a fact number indicator, a Random fact button, a motion-safe fade and browser-local last-fact repeat prevention (`0c6b37d`..TASK010 commit).
 
 ## In progress
 _None. All four Phase 2 eggs are implemented and browser-verified._
@@ -28,7 +28,7 @@ _None. All four Phase 2 eggs are implemented and browser-verified._
 
 ## Trivia upgrades
 
-Trivia upgrades are implemented and verified incrementally in separate commits. TASK005 targets exactly 87 bilingual records; remaining Pending rows have not shipped yet.
+All six trivia upgrades are implemented and verified, each in its own commit.
 
 | Task | Upgrade | Status | Prerequisites |
 |------|---------|--------|---------------|
@@ -37,7 +37,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 | [TASK007](tasks/TASK007-trivia-category-badges.md) | Six localized category badges | Completed | TASK005 |
 | [TASK008](tasks/TASK008-trivia-fade-transition.md) | Motion-safe fade between facts | Completed | None |
 | [TASK009](tasks/TASK009-trivia-fact-indicator.md) | Fact number and dataset total | Completed | None |
-| [TASK010](tasks/TASK010-trivia-repeat-prevention.md) | Browser-local consecutive-repeat prevention | Pending | TASK005, TASK006 |
+| [TASK010](tasks/TASK010-trivia-repeat-prevention.md) | Browser-local consecutive-repeat prevention | Completed | TASK005, TASK006 |
 
 ## Commit log (Phase 2)
 - `19df3bf feat: add heart click spark burst`
@@ -69,3 +69,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 ## TASK009 completion
 - Added a localized fact indicator (Ciekawostka #N z M / Fact #N of M) derived from the selected record position and live dataset length, rendered with the badge, title and text and hidden without a valid record.
 - Verification: 70/61 browser checks at 1440px and 390px incl. all 87 records in PL and EN, first/last, wraparound, language/manual selection, total following dataset size, single/empty/broken fallbacks; screenshots inspected at both widths.
+
+## TASK010 completion
+- Persist only the last displayed fact ID under sting-trivia-last-id (separate from the language key). Startup, random and automatic selections exclude the current and saved ID by ID rather than index, so reloads and dataset reorders never immediately repeat a fact; guarded reads/writes with validation and in-memory fallback; empty/single datasets are stable.
+- Verification: 77 browser checks at 1440px and 390px (300 mixed selections never repeat, reorder, stale/corrupt/oversized IDs, blocked storage variant, empty/single/broken datasets); real-browser CDP test of 15 consecutive reloads never showing the previous fact, language persistence and countdown unaffected.
