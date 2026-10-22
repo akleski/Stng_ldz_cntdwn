@@ -24,8 +24,12 @@
         <section class="hero" id="home" aria-labelledby="hero-title">
             <div class="hero-scrim" aria-hidden="true"></div>
             <div class="particles" id="particles" aria-hidden="true"></div>
+            <div class="arena-beams" id="arenaBeams" aria-hidden="true" hidden>
+                <span style="--angle: -40deg"></span><span style="--angle: -20deg"></span>
+                <span style="--angle: 0deg"></span><span style="--angle: 20deg"></span><span style="--angle: 40deg"></span>
+            </div>
             <div class="hero-content">
-                <h1 id="hero-title"><span class="guitar" aria-hidden="true">🎸</span> STING</h1>
+                <h1 id="hero-title"><span class="guitar" aria-hidden="true">🎸</span> <button type="button" class="sting-trigger" id="stingTrigger">STING</button></h1>
                 <p class="event-meta">
                     <span>Atlas Arena</span><span class="meta-dot" aria-hidden="true">•</span>
                     <span>Łódź</span><span class="meta-dot" aria-hidden="true">•</span>
@@ -106,6 +110,22 @@
     <footer><span data-en="OUR LITTLE CORNER OF THE COUNTDOWN.">NASZ MAŁY ZAKĄTEK ODLICZANIA.</span><span>10.06.2027 <span class="footer-dot" aria-hidden="true">·</span> ATLAS ARENA</span></footer>
 
     <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
+    <p class="toast" id="songToast" role="status" aria-atomic="true"></p>
+    <section class="dedication" id="dedication" aria-labelledby="dedicationTitle" tabindex="-1" hidden>
+        <h2 id="dedicationTitle" data-en="For Monika">Dla Moniki</h2>
+        <p id="memoryText" role="status" aria-atomic="true"></p>
+        <div class="voice-controls">
+            <label for="memoryVoice" data-en="Local voice">Głos na tym urządzeniu</label>
+            <select id="memoryVoice" aria-describedby="voiceStatus"></select>
+            <p id="voiceStatus" role="status"></p>
+        </div>
+        <div class="dedication-actions">
+            <button type="button" id="readMemory" data-en="Read aloud" disabled>Czytaj na głos</button>
+            <button type="button" id="stopMemory" data-en="Stop" disabled>Zatrzymaj</button>
+            <button type="button" id="nextMemory" data-en="Another memory">Kolejne wspomnienie</button>
+            <button type="button" id="closeMemory" data-en="Close">Zamknij</button>
+        </div>
+    </section>
 
     <script>
         // Explicit Warsaw offsets keep the concert time correct in every visitor's timezone.
@@ -126,7 +146,12 @@
                 arrivedStatus: "Nadszedł czas koncertu. Przed nami niezapomniany wieczór!",
                 waiting: "TU I TERAZ",
                 arrivedWaiting: "OCZEKIWANIE DOBIEGŁO KOŃCA",
-                progress: "oczekiwania za nami"
+                progress: "oczekiwania za nami",
+                noVoice: "Brak lokalnego polskiego głosu. Wspomnienie możesz przeczytać tutaj.",
+                localVoice: "Głos działa na tym urządzeniu. Odczyt rozpocznie się dopiero po naciśnięciu Czytaj na głos.",
+                speechError: "Odczyt jest niedostępny. Wspomnienie pozostaje tutaj do przeczytania.",
+                speaking: "Czytanie wspomnienia…",
+                noVoiceOption: "Brak lokalnego głosu"
             },
             en: {
                 heading: "THE NIGHT GETS CLOSER",
@@ -135,7 +160,12 @@
                 arrivedStatus: "Concert time has arrived. Here’s to an unforgettable night!",
                 waiting: "RIGHT HERE, RIGHT NOW",
                 arrivedWaiting: "THE WAIT IS COMPLETE",
-                progress: "of waiting period completed"
+                progress: "of waiting period completed",
+                noVoice: "No local English voice is available. You can read the memory here instead.",
+                localVoice: "This voice runs on your device. Narration starts only when you press Read aloud.",
+                speechError: "Narration is unavailable. The memory is still here to read.",
+                speaking: "Reading the memory…",
+                noVoiceOption: "No local voice"
             }
         };
         const localizedElements = Array.from(document.querySelectorAll("[data-en], [data-en-aria-label], [data-en-content]"), element => ({
@@ -224,6 +254,9 @@
             updateCountdown();
             updateStatus();
             updateTrivia();
+            stopNarration();
+            renderMemory();
+            refreshVoices();
         }
 
         languageSwitch.addEventListener("click", () => {
@@ -254,23 +287,6 @@
             }
             return diff;
         }
-
-        let savedLanguage = "pl";
-        try { savedLanguage = localStorage.getItem("sting-language") || "pl"; } catch { /* Use Polish when storage is unavailable. */ }
-        setLanguage(savedLanguage);
-        languageSwitch.hidden = false;
-        setInterval(() => {
-            triviaIndex = (triviaIndex + 1) % stingTrivia.length;
-            updateTrivia();
-        }, 20000);
-        if (!concertArrived) {
-            const countdownTimer = setInterval(() => {
-                if (updateCountdown() === 0) clearInterval(countdownTimer);
-            }, 1000);
-        }
-        document.addEventListener("visibilitychange", () => {
-            if (!document.hidden) updateCountdown();
-        });
 
         const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
         const fxLayer = document.getElementById("fxLayer");
@@ -310,6 +326,226 @@
         });
         motionPreference.addEventListener("change", clearEffects);
 
+        const dedication = document.getElementById("dedication");
+        const stingTrigger = document.getElementById("stingTrigger");
+        const arenaBeams = document.getElementById("arenaBeams");
+        const memoryText = document.getElementById("memoryText");
+        const voiceSelect = document.getElementById("memoryVoice");
+        const voiceStatus = document.getElementById("voiceStatus");
+        const readMemory = document.getElementById("readMemory");
+        const stopMemory = document.getElementById("stopMemory");
+        const speech = window.speechSynthesis;
+        const memories = [
+            {
+                id: "time-flies",
+                pl: "Moniko, czas pędzi. Z kolejnych chwil powstała nasza historia, a przede mną wciąż najpiękniejsza część: być przy Tobie. Dziś czekamy na Stinga, ale najbardziej cieszę się, że przeżyjemy ten wieczór razem.",
+                en: "Monika, time flies. Moment by moment, we have built our story, and the best part is still being by your side. Today we are counting down to Sting, but what I look forward to most is sharing this night with you."
+            },
+            {
+                id: "climbing",
+                pl: "Poznaliśmy się podczas wspinaczki skałkowej. Wtedy nie wiedziałem jeszcze, że spotkałem osobę, z którą będę dzielić nie tylko kolejne drogi, ale całe życie. Moniko, dobrze mieć Cię po swojej stronie liny.",
+                en: "We met while rock climbing. Back then, I did not know I had met the person I would share not just more routes with, but my whole life. Monika, I am glad you are on my side of the rope."
+            },
+            {
+                id: "proposal",
+                pl: "Kiedy poprosiłem Cię o rękę, chciałem powiedzieć coś więcej niż jedno pytanie: chcę dzielić z Tobą codzienność, wielkie chwile i wszystko pomiędzy. Dziś ten koncert jest kolejną małą częścią naszego razem.",
+                en: "When I asked you to marry me, I meant more than one question: I want to share everyday life, the big moments, and everything in between with you. This concert is another little part of our life together."
+            },
+            {
+                id: "wedding",
+                pl: "W dniu naszego ślubu powiedzieliśmy sobie tak. Od tamtej chwili nasze razem to nie tylko wyjątkowe dni, ale też zwykłe poranki i małe gesty. Moniko, ten wieczór ze Stingiem będzie kolejnym wspomnieniem, które zabierzemy ze sobą.",
+                en: "On our wedding day, we said yes to each other. Since then, together has meant not only special days, but ordinary mornings and small gestures too. Monika, this night with Sting will be another memory we take with us."
+            },
+            {
+                id: "tymon",
+                pl: "A potem pojawił się nasz mały Tymon i nasza historia dostała zupełnie nowy rozdział. Czas pędzi jeszcze szybciej, odkąd jesteśmy rodzicami. Tym bardziej cieszę się na ten wieczór tylko we dwoje: Ty, ja i muzyka.",
+                en: "Then our little son Tymon arrived, and our story began a whole new chapter. Time seems to fly even faster since we became parents. That makes me look forward even more to this night for just the two of us: you, me, and the music."
+            }
+        ];
+        let memoryBag = [];
+        let selectedMemory = null;
+        let availableVoices = [];
+        const preferredVoices = new Map();
+        let activeUtterance = null;
+        let narrationFailed = false;
+        let dedicationTrigger = stingTrigger;
+        let beamsTimer;
+        let toastTimer;
+
+        function showToast(text, tint = "gold") {
+            const toast = document.getElementById("songToast");
+            clearTimeout(toastTimer);
+            toast.textContent = text;
+            toast.dataset.tint = tint;
+            toast.classList.add("visible");
+            toastTimer = setTimeout(() => {
+                toast.classList.remove("visible");
+                toast.textContent = "";
+            }, 3500);
+        }
+
+        function renderMemory() {
+            if (selectedMemory) memoryText.textContent = selectedMemory[language];
+        }
+
+        function updateVoiceStatus() {
+            const copy = translations[language];
+            readMemory.disabled = !selectedMemory || availableVoices.length === 0;
+            stopMemory.disabled = !activeUtterance;
+            voiceStatus.textContent = narrationFailed ? copy.speechError : activeUtterance ? copy.speaking :
+                availableVoices.length ? copy.localVoice : copy.noVoice;
+        }
+
+        function stopNarration() {
+            const previous = activeUtterance;
+            activeUtterance = null;
+            if (previous) {
+                previous.onend = previous.onerror = null;
+                speech.cancel();
+            }
+            updateVoiceStatus();
+        }
+
+        function refreshVoices() {
+            const selected = availableVoices[Number(voiceSelect.value)];
+            if (selected) preferredVoices.set(selected.lang.split(/[-_]/)[0].toLowerCase(), selected.voiceURI);
+            let voices = [];
+            if (speech && typeof window.SpeechSynthesisUtterance === "function") {
+                try { voices = speech.getVoices(); } catch { /* Keep the text-only fallback. */ }
+            }
+            const locale = language === "pl" ? "pl-pl" : "en-gb";
+            const maleHint = /\b(adam|david|mark|george|james|daniel|ryan|paweł|pawel|krzysztof|bartosz|tomasz)\b/i;
+            availableVoices = voices.filter(voice => voice.localService === true &&
+                voice.lang.replaceAll("_", "-").toLowerCase().split("-")[0] === language)
+                .sort((a, b) => {
+                    const rank = voice => (voice.lang.replaceAll("_", "-").toLowerCase() === locale ? 0 : 2) +
+                        (maleHint.test(voice.name) ? 0 : 1);
+                    return rank(a) - rank(b) || a.name.localeCompare(b.name);
+                });
+            if (activeUtterance && !availableVoices.some(voice => voice.voiceURI === activeUtterance.voice.voiceURI)) {
+                stopNarration();
+            }
+            voiceSelect.replaceChildren();
+            availableVoices.forEach((voice, index) => {
+                const option = new Option(`${voice.name} (${voice.lang})`, String(index));
+                voiceSelect.add(option);
+            });
+            if (!availableVoices.length) voiceSelect.add(new Option(translations[language].noVoiceOption, ""));
+            voiceSelect.disabled = availableVoices.length === 0;
+            const preferred = availableVoices.findIndex(voice => voice.voiceURI === preferredVoices.get(language));
+            voiceSelect.value = availableVoices.length ? String(Math.max(0, preferred)) : "";
+            updateVoiceStatus();
+        }
+
+        function revealMemory(trigger = stingTrigger) {
+            stopNarration();
+            narrationFailed = false;
+            if (!memoryBag.length) {
+                memoryBag = [...memories];
+                for (let index = memoryBag.length - 1; index > 0; index--) {
+                    const other = Math.floor(Math.random() * (index + 1));
+                    [memoryBag[index], memoryBag[other]] = [memoryBag[other], memoryBag[index]];
+                }
+                if (memoryBag.at(-1).id === selectedMemory?.id) {
+                    [memoryBag[0], memoryBag[memoryBag.length - 1]] = [memoryBag.at(-1), memoryBag[0]];
+                }
+            }
+            selectedMemory = memoryBag.pop();
+            if (!dedication.contains(trigger)) dedicationTrigger = trigger;
+            dedication.hidden = false;
+            renderMemory();
+            refreshVoices();
+            clearTimeout(beamsTimer);
+            arenaBeams.hidden = motionPreference.matches;
+            if (!motionPreference.matches) beamsTimer = setTimeout(() => { arenaBeams.hidden = true; }, 8000);
+            dedication.focus({ preventScroll: true });
+        }
+
+        function closeDedication() {
+            stopNarration();
+            dedication.hidden = true;
+            clearTimeout(beamsTimer);
+            arenaBeams.hidden = true;
+            dedicationTrigger.focus({ preventScroll: true });
+        }
+
+        readMemory.addEventListener("click", () => {
+            stopNarration();
+            refreshVoices();
+            const voice = availableVoices[Number(voiceSelect.value)];
+            if (!selectedMemory || !voice) return;
+            const utterance = new SpeechSynthesisUtterance(selectedMemory[language]);
+            utterance.voice = voice;
+            utterance.lang = voice.lang;
+            utterance.rate = 0.95;
+            activeUtterance = utterance;
+            narrationFailed = false;
+            utterance.onend = () => {
+                if (activeUtterance !== utterance) return;
+                activeUtterance = null;
+                updateVoiceStatus();
+            };
+            utterance.onerror = () => {
+                if (activeUtterance !== utterance) return;
+                activeUtterance = null;
+                narrationFailed = true;
+                updateVoiceStatus();
+            };
+            updateVoiceStatus();
+            try { speech.speak(utterance); } catch { utterance.onerror(); }
+        });
+        stopMemory.addEventListener("click", stopNarration);
+        voiceSelect.addEventListener("change", () => {
+            stopNarration();
+            narrationFailed = false;
+            const voice = availableVoices[Number(voiceSelect.value)];
+            if (voice) preferredVoices.set(language, voice.voiceURI);
+            updateVoiceStatus();
+        });
+        speech?.addEventListener("voiceschanged", refreshVoices);
+        document.getElementById("nextMemory").addEventListener("click", event => revealMemory(event.currentTarget));
+        document.getElementById("closeMemory").addEventListener("click", closeDedication);
+        dedication.addEventListener("keydown", event => {
+            if (event.key === "Escape") closeDedication();
+        });
+        motionPreference.addEventListener("change", () => {
+            if (motionPreference.matches) {
+                clearTimeout(beamsTimer);
+                arenaBeams.hidden = true;
+            }
+        });
+
+        const konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+        let konamiIndex = 0;
+        document.addEventListener("keydown", event => {
+            if (event.repeat || event.ctrlKey || event.altKey || event.metaKey) return;
+            if (event.target.closest("input, textarea, select, [contenteditable]:not([contenteditable='false'])")) {
+                konamiIndex = 0;
+                return;
+            }
+            const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+            konamiIndex = key === konami[konamiIndex] ? konamiIndex + 1 : key === konami[0] ? 1 : 0;
+            if (konamiIndex === konami.length) {
+                konamiIndex = 0;
+                revealMemory(document.activeElement instanceof HTMLElement && document.activeElement !== document.body ?
+                    document.activeElement : stingTrigger);
+            }
+        });
+        let activations = 0;
+        let activationStart = 0;
+        stingTrigger.addEventListener("click", () => {
+            const now = performance.now();
+            if (activations === 0 || now - activationStart > 1000) {
+                activations = 0;
+                activationStart = now;
+            }
+            if (++activations === 3) {
+                activations = 0;
+                activationStart = 0;
+                revealMemory(stingTrigger);
+            }
+        });
+
         function syncParticles() {
             const particles = document.getElementById("particles");
             particles.replaceChildren();
@@ -326,6 +562,24 @@
             }
             particles.appendChild(fragment);
         }
+        let savedLanguage = "pl";
+        try { savedLanguage = localStorage.getItem("sting-language") || "pl"; } catch { /* Use Polish when storage is unavailable. */ }
+        setLanguage(savedLanguage);
+        languageSwitch.hidden = false;
+        setInterval(() => {
+            triviaIndex = (triviaIndex + 1) % stingTrivia.length;
+            updateTrivia();
+        }, 20000);
+        if (!concertArrived) {
+            const countdownTimer = setInterval(() => {
+                if (updateCountdown() === 0) clearInterval(countdownTimer);
+            }, 1000);
+        }
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) stopNarration();
+            else updateCountdown();
+        });
+        window.addEventListener("pagehide", stopNarration);
         syncParticles();
         motionPreference.addEventListener("change", syncParticles);
     </script>

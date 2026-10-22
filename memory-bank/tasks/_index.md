@@ -4,7 +4,6 @@
 _None_
 
 ## Pending
-- [TASK002] Beams + spoken dedication egg - Konami or triple-click/tap STING; five random bilingual memories, explicit local-only Read aloud, preferred male voice + selector; omits exact family dates/times; introduces toast
 - [TASK003] Song wink - Styled console message and footer dot cycling Sting song titles (reuses toast)
 - [TASK004] Concert-day confetti - Celebration on arrival, replayable via closing ✦ (reuses FX layer + burst)
 - [TASK005](TASK005-expanded-trivia-json.md) Expanded trivia JSON - 50-100 verified bilingual records with stable IDs and categories
@@ -15,6 +14,7 @@ _None_
 - [TASK010](TASK010-trivia-repeat-prevention.md) Remember last fact - Browser-local consecutive-repeat prevention; depends on TASK005 and TASK006
 
 ## Completed
+- [TASK002] Beams + spoken dedication - Completed 2026-10-22; triggers, shuffle, bilingual text and local TTS mocks passed; real audio needs device check
 - [TASK001] Heart spark burst - Completed 2026-10-22; desktop/mobile, keyboard, PL/EN and reduced-motion checks passed
 
 ## Abandoned

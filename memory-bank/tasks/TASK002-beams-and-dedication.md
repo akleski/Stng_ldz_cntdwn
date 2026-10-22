@@ -1,6 +1,6 @@
 # TASK002 - Arena beams + dedication (Konami / triple-click STING)
 
-**Status:** Pending  
+**Status:** Completed  
 **Added:** 2026-10-22  
 **Updated:** 2026-10-22
 
@@ -40,19 +40,19 @@ Short original text, no song lyrics. No exact private dates/times are stored her
 
 ## Progress Tracking
 
-**Overall Status:** Not Started - 0%
+**Overall Status:** Completed - 100%
 
 ### Subtasks
 | ID | Description | Status | Updated | Notes |
 |----|-------------|--------|---------|-------|
-| 2.1 | Beams overlay HTML + CSS (match image beam geometry) | Not Started | 2026-10-22 | Compare against hero screenshot |
-| 2.2 | Status toast + persistent dedication panel with localized controls | Not Started | 2026-10-22 | Toast reused by TASK003 |
-| 2.3 | Five paired memories, shuffle bag, privacy-safe text | Not Started | 2026-10-22 | Preserve ID across language changes |
-| 2.4 | Local-only TTS, male-voice preference, selector, Read/Stop | Not Started | 2026-10-22 | Text fallback; no guaranteed gender |
-| 2.5 | Konami + touch-safe triple-activation + keyboard access | Not Started | 2026-10-22 | No preventDefault on arrows |
-| 2.6 | Cancellation, voice loading/error paths, reduced-motion fallback | Not Started | 2026-10-22 | Cancel on close/new memory/language change/page hide |
-| 2.7 | Verify CDP interactions, shuffle, PL/EN, mobile, local-only voice mocks | Not Started | 2026-10-22 | Real audio/voices require manual device check |
-| 2.8 | Update memory bank and commit | Not Started | 2026-10-22 | Suggested: `feat: add spoken dedication and arena beams` |
+| 2.1 | Beams overlay HTML + CSS (match image beam geometry) | Complete | 2026-10-22 | Roof origin checked at 1440px/390px |
+| 2.2 | Status toast + persistent dedication panel with localized controls | Complete | 2026-10-22 | Responsive panel leaves language switch usable |
+| 2.3 | Five paired memories, shuffle bag, privacy-safe text | Complete | 2026-10-22 | Two bags and boundary non-repeat verified |
+| 2.4 | Local-only TTS, male-voice preference, selector, Read/Stop | Complete | 2026-10-22 | Exact locale first; name hint only |
+| 2.5 | Konami + touch-safe triple-activation + keyboard access | Complete | 2026-10-22 | Real CDP touch and keyboard input passed |
+| 2.6 | Cancellation, voice loading/error paths, reduced-motion fallback | Complete | 2026-10-22 | Lifecycle, voice removal and error mocks passed |
+| 2.7 | Verify CDP interactions, shuffle, PL/EN, mobile, local-only voice mocks | Complete | 2026-10-22 | Real audio/voices still require manual device check |
+| 2.8 | Update memory bank and commit | Complete | 2026-10-22 | `feat: add spoken dedication and arena beams` |
 
 ## Progress Log
 ### 2026-10-22
@@ -60,4 +60,8 @@ Short original text, no song lyrics. No exact private dates/times are stored her
 - Plan expanded with five bilingual relationship memories and optional narration following the current language switch.
 - User selected local browser TTS, preferred male voice with selector, text-only fallback, and explicit Read aloud after reveal.
 - User selected public milestones without exact dates/times. Private dates/times intentionally excluded from these tracked documents.
-- Implementation remains Pending at 0%; only the plan has changed.
+- Implemented all eight subtasks: arena beams, shared toast, accessible persistent panel, approved bilingual memories, shuffle bag and optional local-only narration.
+- Matched the beam origin to the arena roof at 37.5% of the rendered background height (desktop 980px/100svh, tablet 760px, mobile 560px). Existing title and arena remain readable; the bottom panel overlays the countdown intentionally, scrolls if necessary and leaves the language switch accessible.
+- Edge CDP verification passed desktop/mobile and both motion modes: real triple-touch/Enter, Konami, bounded tap window, two non-repeating bags, stable ID on translation, local voice filtering/preference/selection, replace-not-queue speech, close/new memory/language/pagehide cancellation, voice removal, error and missing API fallbacks. Seven browser configurations passed without exceptions.
+- Inspected active-beam and panel screenshots at both widths. No autoplay, new network requests, private dates or song lyrics introduced. Actual audible output and device voice availability remain manual checks.
+- Updated the task table, index, progress and active context for its separate commit.

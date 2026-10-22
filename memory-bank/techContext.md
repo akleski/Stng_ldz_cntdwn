@@ -12,7 +12,7 @@
 1. Static: view diffs, confirm no console errors.
 2. Visual: headless Edge screenshot, launched via `Start-Process -PassThru` + `WaitForExit(timeout)` + throwaway `--user-data-dir`. A bare `&` call can hang.
 3. Interaction and time-travel: drive headless Edge over the Chrome DevTools Protocol with a temp Node script (built-in `WebSocket`, `--remote-debugging-port`). Use `Page.addScriptToEvaluateOnNewDocument` to override `Date` for the concert-day test (TASK004), `Input.dispatchKeyEvent` for the Konami code, `Input.dispatchMouseEvent` for clicks. Keep scripts in `%TEMP%`, delete afterwards.
-4. Mobile: headless Edge has a ~500px minimum window; test 390px with a temp wrapper HTML containing a 390px iframe. Delete wrapper afterwards.
+4. Mobile: use CDP `Emulation.setDeviceMetricsOverride` for a true 390px viewport (verified), despite the headless window minimum. A 390px iframe wrapper remains an alternative.
 5. Reduced motion: `Emulation.setEmulatedMedia` with `prefers-reduced-motion: reduce`.
 
 ## Constraints

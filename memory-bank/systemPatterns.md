@@ -15,7 +15,7 @@ Static single page. All behaviour lives in one inline `<script>` at the end of `
 - Hero stacking: `.hero` (isolation: isolate) > `.hero-scrim`, `.particles` (z-index -1), `.hero-content`, `.glass-widget`.
 - Global reduced-motion block at the end of `styles.css` neutralises animations/transitions.
 
-## Planned patterns for easter eggs (Phase 2)
+## Easter-egg patterns (Phase 2)
 - **FX layer:** one `position: fixed; inset: 0; pointer-events: none` container (`.fx-layer`, `aria-hidden`) for sparks and confetti. Created in TASK001, reused by TASK004.
 - **Burst helper:** `burst(x, y, options)` in the inline script, using the Web Animations API on short-lived spans. Removes nodes on finish. No-op under reduced motion. Reused by TASK004.
 - **Toast:** one non-interactive `role="status"` element (`.toast`), auto-hides, used for TASK003 song hints. Created in TASK002.

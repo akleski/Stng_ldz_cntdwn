@@ -174,6 +174,115 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
     animation: heartbeat 2.4s ease-in-out infinite;
 }
 
+.sting-trigger {
+    border: 0;
+    padding: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    text-shadow: inherit;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.arena-beams {
+    position: absolute;
+    inset: 0 0 auto;
+    height: max(100svh, 980px);
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+.arena-beams span {
+    position: absolute;
+    left: 50%;
+    bottom: 62.5%;
+    width: clamp(18px, 4vw, 60px);
+    height: 34%;
+    transform: translateX(-50%) rotate(var(--angle));
+    transform-origin: 50% 100%;
+    background: linear-gradient(to top, rgba(251, 191, 36, 0.4), transparent);
+    clip-path: polygon(0 0, 100% 0, 53% 100%, 47% 100%);
+    animation: beam-glow 8s ease-in-out both;
+}
+.arena-beams span:nth-child(even) {
+    background: linear-gradient(to top, rgba(52, 211, 153, 0.4), transparent);
+}
+@keyframes beam-glow {
+    0%, 100% { opacity: 0; }
+    15%, 80% { opacity: 1; }
+}
+.toast {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: calc(100% - 2rem);
+    z-index: 40;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    background: rgba(6, 10, 18, 0.95);
+    color: var(--gold-soft);
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.toast.visible { opacity: 1; }
+.toast[data-tint="emerald"] { color: var(--emerald-soft); border-color: var(--emerald); }
+.dedication {
+    position: fixed;
+    z-index: 35;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(620px, calc(100% - 2rem));
+    max-height: min(70dvh, calc(100dvh - 6rem));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid var(--emerald);
+    border-radius: 22px;
+    background: rgba(6, 10, 18, 0.96);
+    box-shadow: 0 12px 60px rgba(0, 0, 0, 0.6);
+}
+.dedication:focus-visible, .voice-controls select:focus-visible {
+    outline: 2px solid var(--gold-soft);
+    outline-offset: 3px;
+}
+.dedication h2 { font-family: var(--serif); color: var(--emerald-soft); }
+#memoryText { margin-top: 0.75rem; line-height: 1.7; }
+.voice-controls { margin-top: 1rem; }
+.voice-controls label { display: block; margin-bottom: 0.35rem; color: var(--muted); font-size: 0.85rem; }
+.voice-controls select {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.5rem;
+    border: 1px solid var(--muted);
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--text);
+    font: inherit;
+}
+#voiceStatus { margin-top: 0.5rem; color: var(--muted); font-size: 0.8rem; }
+.dedication-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.dedication-actions button {
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.dedication-actions button:disabled { opacity: 0.45; cursor: default; }
+@media (max-width: 1100px) { .arena-beams { height: 760px; } }
+@media (max-width: 760px) { .arena-beams { height: 560px; } }
+
 .fx-layer {
     position: fixed;
     inset: 0;
