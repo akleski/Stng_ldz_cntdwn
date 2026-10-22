@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0a1010">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="description" content="Jedno miasto. Dwa serca. Jeden niezapomniany wieczór. Adam i Monika odliczają do koncertu Stinga w Atlas Arenie w Łodzi, 10 czerwca 2027." data-en-content="One city. Two hearts. One unforgettable night. Adam and Monika count down to Sting at Atlas Arena, Łódź, on 10 June 2027.">
     <title data-en="Sting in Łódź • Adam & Monika • 10 June 2027">Sting w Łodzi • Adam i Monika • 10 czerwca 2027</title>
     <link rel="stylesheet" href="styles.css">
@@ -37,6 +38,7 @@
                 </p>
             </div>
 
+            <div class="hero-widgets">
             <div class="glass-widget" id="countdown" tabindex="-1">
                 <p class="section-kicker" id="countdownHeading">TEN WIECZÓR JEST CORAZ BLIŻEJ</p>
                 <div class="countdown" role="group" aria-labelledby="countdownHeading">
@@ -61,6 +63,20 @@
 
                 <p class="countdown-caption" id="concertStatus" role="status">Każdego dnia bliżej koncertowego wieczoru...</p>
                 <noscript><p class="countdown-caption">Włącz JavaScript, aby zobaczyć odliczanie na żywo. Koncert: 10 czerwca 2027, godz. 19:00 w Łodzi.</p></noscript>
+            </div>
+
+            <aside class="music-widget" aria-labelledby="music-title">
+                <p class="section-kicker" data-en="THE SOUNDTRACK TO OUR COUNTDOWN">MUZYKA DO NASZEGO ODLICZANIA</p>
+                <h2 id="music-title" data-en="Sting · favourite songs">Sting · ulubione utwory</h2>
+                <iframe class="music-player"
+                    src="https://www.youtube-nocookie.com/embed/KLVq0IAzh1A?playlist=d27gTrPPAyk,NlwIDxCjL-8,C3lWwBslWqg,lB6a-iD6ZOY&amp;playsinline=1"
+                    title="Sting — Fields of Gold, Englishman in New York, Shape of My Heart, Desert Rose, Fragile"
+                    loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+                    allow="encrypted-media; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                <p class="music-description" data-en="Five official videos. Press play; use the player’s next button to skip a song.">Pięć oficjalnych teledysków. Naciśnij play; przyciskiem następnego utworu zmienisz piosenkę.</p>
+                <a class="music-link" href="https://music.youtube.com/@theofficialsting" target="_blank" rel="noopener noreferrer"><span data-en="Open YouTube Music · shuffle / mix">Otwórz YouTube Music · Losowo / Składanka</span> <span aria-hidden="true">↗</span></a>
+                <p class="music-notice" data-en="Premium/ad-free playback is not guaranteed in the embedded player. For your subscription, open YouTube Music and sign in.">Odtwarzacz na stronie nie gwarantuje Premium ani braku reklam. Aby korzystać z subskrypcji, otwórz YouTube Music i zaloguj się.</p>
+            </aside>
             </div>
         </section>
 

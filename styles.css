@@ -117,7 +117,7 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
     padding: clamp(5.5rem, 9vh, 7rem) 1.25rem clamp(1.5rem, 4vh, 3rem);
     background:
         linear-gradient(180deg, rgba(6, 10, 18, 0.35) 0%, rgba(6, 10, 18, 0) 30%, rgba(6, 10, 18, 0) 70%, var(--ink) 100%),
-        url("./assets/lodz-sting-bg.jfif") center top / cover no-repeat,
+        url("./assets/lodz-sting-bg.jfif") center top / auto max(100svh, 980px) no-repeat,
         var(--ink);
     animation: bg-drift 28s ease-in-out infinite alternate;
 }
@@ -167,6 +167,36 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
     font-size: 0.8em;
     animation: heartbeat 2.4s ease-in-out infinite;
 }
+
+/* Both panels sit in the foreground, below the arena and skyline. */
+.hero-widgets {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    width: min(100%, 820px);
+    margin-top: 20rem;
+}
+
+.music-widget {
+    width: min(100%, 480px);
+    justify-self: center;
+    min-width: 0;
+    padding: 1.2rem;
+    background: var(--glass);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 22px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+.music-widget .section-kicker { font-size: 0.6rem; letter-spacing: 0.15em; }
+.music-widget h2 { margin: 0.4rem 0 0.8rem; font-family: var(--serif); font-size: 1.3rem; }
+.music-player { display: block; width: 100%; min-height: 200px; aspect-ratio: 16 / 9; border: 0; border-radius: 12px; }
+.music-description, .music-notice { color: var(--muted); font-size: 0.75rem; line-height: 1.5; }
+.music-description { margin-top: 0.7rem; }
+.music-link { display: inline-block; padding: 0.7rem 0; color: var(--emerald-soft); font-size: 0.8rem; text-underline-offset: 3px; }
+.music-link:hover { color: var(--gold-soft); }
+.music-notice { font-size: 0.68rem; }
 
 /* Glass widget */
 .glass-widget {
@@ -429,6 +459,14 @@ footer {
 }
 
 /* Responsive */
+@media (max-width: 1100px) {
+    .hero {
+        background-size: 100% 100%, auto 760px, auto;
+        animation: none;
+    }
+    .hero-widgets { margin-top: 16rem; }
+}
+
 @media (max-width: 760px) {
     .header-note { display: none; }
 
@@ -443,6 +481,7 @@ footer {
             var(--ink);
         animation: none;
     }
+    .hero-widgets { margin-top: 0; }
     .event-meta { line-height: 1.7; }
     .glass-widget { border-radius: 22px; }
     .countdown { gap: 0.5rem; }
