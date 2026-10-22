@@ -33,7 +33,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 | Task | Upgrade | Status | Prerequisites |
 |------|---------|--------|---------------|
 | [TASK005](tasks/TASK005-expanded-trivia-json.md) | 87 verified bilingual JSON records | Completed | None |
-| [TASK006](tasks/TASK006-random-trivia-button.md) | Random Trivia button | Pending | None |
+| [TASK006](tasks/TASK006-random-trivia-button.md) | Random Trivia button | Completed | None |
 | [TASK007](tasks/TASK007-trivia-category-badges.md) | Six localized category badges | Pending | TASK005 |
 | [TASK008](tasks/TASK008-trivia-fade-transition.md) | Motion-safe fade between facts | Pending | None |
 | [TASK009](tasks/TASK009-trivia-fact-indicator.md) | Fact number and dataset total | Pending | None |
@@ -53,3 +53,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 ## TASK005 completion
 - Embedded 87 sourced bilingual trivia records (career 18, police 16, personal 12, awards 15, movies 14, activism 12) as non-executable JSON with stable IDs, parsed once and validated, with a bilingual fallback and no pointless rotation for empty/single datasets.
 - Verification: Every record fact-checked against fetched sources by independent reviewers and corrected; 27 browser checks passed at 1440px and 390px with reduced motion, plus broken/empty/single dataset variants.
+
+## TASK006 completion
+- Added a native bilingual Random fact button to the existing trivia card. It picks a different fact (no retry loop), restarts the single 20-second rotation timer, keeps the selected fact across PL/EN, and hides when fewer than two records exist.
+- Verification: 39 browser checks at 1440px and 390px (300 rapid clicks never repeat, single timer, language preservation, hidden for empty/single data); live CDP Enter, Space and touch activation passed; screenshots inspected at both widths.

@@ -10,6 +10,7 @@ Static single page. All behaviour lives in one inline `<script>` at the end of `
 - `syncParticles()` builds ~22 `.particle` spans in `#particles`; cleared when reduced motion is on.
 - Motion gate: `motionPreference = matchMedia("(prefers-reduced-motion: reduce)")`.
 - Trivia: `#stingTriviaData` is embedded non-executable JSON, parsed once by `parseTrivia()`. Records carry stable IDs, one of six category keys, paired PL/EN title/text and supporting HTTPS source URLs. Invalid data uses a bilingual fallback; empty/single datasets do not rotate.
+- Trivia selection: `selectTrivia(index, restart)` is the single path for manual and automatic changes; `startTriviaRotation()` owns the one 20-second interval. The Random fact button picks `triviaIndex + 1 + random(length - 1)` (never the current fact, no retry loop), restarts the interval, and is hidden when fewer than two records exist.
 
 ## CSS patterns
 - Tokens in `:root`: `--gold`, `--gold-soft`, `--emerald`, `--emerald-soft`, `--ink`, `--glass`, `--ease`.

@@ -1,6 +1,6 @@
 # TASK006 - Random Trivia button
 
-**Status:** Pending  
+**Status:** Completed  
 **Added:** 2026-10-22  
 **Updated:** 2026-10-22
 
@@ -25,15 +25,19 @@
 
 ## Progress Tracking
 
-**Overall Status:** Not Started - 0%
+**Overall Status:** Completed - 100%
 
 ### Subtasks
 | ID | Description | Status | Updated | Notes |
 |----|-------------|--------|---------|-------|
-| 6.1 | Add bilingual accessible button | Not Started | 2026-10-22 | Existing trivia card |
-| 6.2 | Implement random selection and timer coordination | Not Started | 2026-10-22 | No immediate repeats |
-| 6.3 | Verify inputs, timer, PL/EN; update memory bank | Not Started | 2026-10-22 | Empty/single-record checks |
+| 6.1 | Add bilingual accessible button | Complete | 2026-10-22 | Existing trivia card |
+| 6.2 | Implement random selection and timer coordination | Complete | 2026-10-22 | No immediate repeats |
+| 6.3 | Verify inputs, timer, PL/EN; update memory bank | Complete | 2026-10-22 | Empty/single-record checks |
 
 ## Progress Log
 ### 2026-10-22
 - Created from the selected future-upgrades list. Can start with the existing dataset; no dependency on TASK005.
+
+- Implemented: Added a native bilingual Random fact button to the existing trivia card. It picks a different fact (no retry loop), restarts the single 20-second rotation timer, keeps the selected fact across PL/EN, and hides when fewer than two records exist.
+- Verified: 39 browser checks at 1440px and 390px (300 rapid clicks never repeat, single timer, language preservation, hidden for empty/single data); live CDP Enter, Space and touch activation passed; screenshots inspected at both widths.
+- Updated task status, subtasks, index, progress and active context in the separate feature commit; no Copilot trailer and no push.

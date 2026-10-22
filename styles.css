@@ -343,6 +343,23 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
     font-size: 1.1rem;
 }
 .trivia-card p { color: var(--text); line-height: 1.6; }
+.trivia-button {
+    margin-top: 1rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--emerald);
+    border-radius: 999px;
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--emerald-soft);
+    font: inherit;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background 0.2s, color 0.2s;
+}
+.trivia-button:hover { background: rgba(16, 185, 129, 0.25); color: var(--text); }
+.trivia-button[hidden] { display: none; }
 @media (max-width: 480px) {
     .trivia-card { min-height: 18rem; }
 }

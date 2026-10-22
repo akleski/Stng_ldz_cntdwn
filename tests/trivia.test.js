@@ -61,8 +61,39 @@
         timer.callback();
         await wait();
         sameFact();
+        if (testTask >= 6) {
+            const button = document.getElementById('randomTrivia');
+            const rotationTimers = () => [...testIntervals].filter(([, timer]) => timer.delay === 20000).map(([id]) => id);
+            assert(button.tagName === 'BUTTON' && button.type === 'button' && !button.hidden, 'Native visible random button');
+            assert(button.textContent === 'Losowa ciekawostka', 'Polish button label');
+            assert(button.getBoundingClientRect().height >= 40 && button.getBoundingClientRect().right <= innerWidth, 'Button is touch-sized and fits viewport');
+            setLanguage('en');
+            assert(button.textContent === 'Random fact', 'English button label');
+            const firstTimer = rotationTimers();
+            assert(firstTimer.length === 1, 'Exactly one rotation timer');
+            let previousIndex = triviaIndex;
+            const seen = new Set();
+            for (let click = 0; click < 300; click++) {
+                button.click();
+                if (triviaIndex === previousIndex) throw new Error('Random button repeated the current fact');
+                seen.add(triviaIndex);
+                previousIndex = triviaIndex;
+            }
+            assert(seen.size > 40, 'Rapid random selections stay varied');
+            sameFact();
+            const afterTimer = rotationTimers();
+            assert(afterTimer.length === 1 && afterTimer[0] !== firstTimer[0], 'Manual selection restarts one rotation timer');
+            const selectedByButton = triviaIndex;
+            setLanguage('pl');
+            sameFact();
+            assert(triviaIndex === selectedByButton, 'Language switch keeps manually selected fact');
+            testIntervals.get(afterTimer[0]).callback();
+            assert(triviaIndex === (selectedByButton + 1) % stingTrivia.length, 'Automatic rotation continues after manual selection');
+            assert(button.tabIndex === 0 && getComputedStyle(button).outlineStyle !== undefined, 'Button is keyboard focusable');
+        }
         } else {
             assert(stingTrivia.length === (testDataset === 'single' ? 1 : 0), 'Fallback dataset size');
+            if (testTask >= 6) assert(document.getElementById('randomTrivia').hidden, 'Random button hidden without alternatives');
             sameFact();
             setLanguage('en');
             sameFact();

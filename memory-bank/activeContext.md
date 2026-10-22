@@ -3,7 +3,7 @@
 **Updated:** 2026-10-22
 
 ## Current focus
-Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being implemented in separate commits, with exactly 87 sourced bilingual records. Latest completed item: TASK005. No Copilot co-author trailers and no push. See [task index](tasks/_index.md) for remaining work.
+Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being implemented in separate commits, with exactly 87 sourced bilingual records. Latest completed item: TASK006. No Copilot co-author trailers and no push. See [task index](tasks/_index.md) for remaining work.
 
 ## Recent changes (from git history)
 - 2026-10-21 `fb58aa4` initial commit, `25d2bbc` premium microsite redesign, `be47fd5` PL default + EN/PL toggle.
@@ -42,3 +42,7 @@ Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being impl
 ## TASK005 implemented
 - Embedded 87 sourced bilingual trivia records (career 18, police 16, personal 12, awards 15, movies 14, activism 12) as non-executable JSON with stable IDs, parsed once and validated, with a bilingual fallback and no pointless rotation for empty/single datasets.
 - Verification: Every record fact-checked against fetched sources by independent reviewers and corrected; 27 browser checks passed at 1440px and 390px with reduced motion, plus broken/empty/single dataset variants.
+
+## TASK006 implemented
+- Added a native bilingual Random fact button to the existing trivia card. It picks a different fact (no retry loop), restarts the single 20-second rotation timer, keeps the selected fact across PL/EN, and hides when fewer than two records exist.
+- Verification: 39 browser checks at 1440px and 390px (300 rapid clicks never repeat, single timer, language preservation, hidden for empty/single data); live CDP Enter, Space and touch activation passed; screenshots inspected at both widths.

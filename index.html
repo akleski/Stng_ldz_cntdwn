@@ -74,6 +74,7 @@
                 <div class="trivia-card">
                     <h3 id="triviaTitle">Nauczyciel przed karierą muzyczną</h3>
                     <p id="triviaText">Zanim został Stingiem, Gordon Sumner pracował jako nauczyciel w szkole podstawowej.</p>
+                    <button type="button" class="trivia-button" id="randomTrivia" data-en="Random fact">Losowa ciekawostka</button>
                 </div>
             </section>
 
@@ -677,10 +678,26 @@
         try { savedLanguage = localStorage.getItem("sting-language") || "pl"; } catch { /* Use Polish when storage is unavailable. */ }
         setLanguage(savedLanguage);
         languageSwitch.hidden = false;
-        if (stingTrivia.length > 1) setInterval(() => {
-            triviaIndex = (triviaIndex + 1) % stingTrivia.length;
+        let triviaTimer;
+        const randomTrivia = document.getElementById("randomTrivia");
+
+        function startTriviaRotation() {
+            clearInterval(triviaTimer);
+            if (stingTrivia.length < 2) return;
+            triviaTimer = setInterval(() => selectTrivia((triviaIndex + 1) % stingTrivia.length, false), 20000);
+        }
+
+        // Manual picks restart the 20-second timer so a new fact is not replaced immediately.
+        function selectTrivia(index = triviaIndex + 1 + Math.floor(Math.random() * (stingTrivia.length - 1)), restart = true) {
+            if (stingTrivia.length === 0) return;
+            triviaIndex = index % stingTrivia.length;
             updateTrivia();
-        }, 20000);
+            if (restart) startTriviaRotation();
+        }
+
+        randomTrivia.hidden = stingTrivia.length < 2;
+        randomTrivia.addEventListener("click", () => selectTrivia());
+        startTriviaRotation();
         console.log(`%c♫ %c${translations[language].consoleWink}`, "color: #F59E0B; font-weight: bold", "color: #10B981");
         if (!concertArrived) {
             const countdownTimer = setInterval(() => {
