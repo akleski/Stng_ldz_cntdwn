@@ -72,9 +72,11 @@
             <section class="trivia-section" aria-labelledby="trivia-heading">
                 <h2 id="trivia-heading"><span aria-hidden="true">🎸</span> <span data-en="Sting Trivia">Ciekawostki o Stingu</span></h2>
                 <div class="trivia-card">
-                    <p class="trivia-category" id="triviaCategory" hidden></p>
-                    <h3 id="triviaTitle">Nauczyciel przed karierą muzyczną</h3>
-                    <p id="triviaText">Zanim został Stingiem, Gordon Sumner pracował jako nauczyciel w szkole podstawowej.</p>
+                    <div class="trivia-content" id="triviaContent">
+                        <p class="trivia-category" id="triviaCategory" hidden></p>
+                        <h3 id="triviaTitle">Nauczyciel przed karierą muzyczną</h3>
+                        <p id="triviaText">Zanim został Stingiem, Gordon Sumner pracował jako nauczyciel w szkole podstawowej.</p>
+                    </div>
                     <button type="button" class="trivia-button" id="randomTrivia" data-en="Random fact">Losowa ciekawostka</button>
                 </div>
             </section>
@@ -311,7 +313,10 @@
             en: { title: "Teacher before a music career", text: "Before his music career, Gordon Sumner worked as a primary-school teacher." }
         };
 
-        function updateTrivia() {
+        const triviaContent = document.getElementById("triviaContent");
+        let triviaFade = 0;
+
+        function renderTrivia() {
             const record = stingTrivia[triviaIndex];
             const trivia = (record || triviaFallback)[language];
             const category = record && categoryLabels[record.category];
@@ -319,6 +324,25 @@
             triviaCategory.hidden = !category;
             triviaTitle.textContent = trivia.title;
             triviaText.textContent = trivia.text;
+        }
+
+        // Immediate by default. Animated updates fade out, render whatever is selected at that moment, then fade in;
+        // requests made while fading simply reuse the pending render so the final state is always the latest.
+        function updateTrivia(animate = false) {
+            if (animate && !motionPreference.matches && !triviaFade) {
+                triviaContent.classList.add("is-fading");
+                triviaFade = setTimeout(() => {
+                    triviaFade = 0;
+                    renderTrivia();
+                    triviaContent.classList.remove("is-fading");
+                }, 180);
+                return;
+            }
+            if (animate && triviaFade) return;
+            clearTimeout(triviaFade);
+            triviaFade = 0;
+            triviaContent.classList.remove("is-fading");
+            renderTrivia();
         }
 
         function updateStatus() {
@@ -705,9 +729,11 @@
         function selectTrivia(index = triviaIndex + 1 + Math.floor(Math.random() * (stingTrivia.length - 1)), restart = true) {
             if (stingTrivia.length === 0) return;
             triviaIndex = index % stingTrivia.length;
-            updateTrivia();
+            updateTrivia(true);
             if (restart) startTriviaRotation();
         }
+
+        motionPreference.addEventListener("change", () => { if (motionPreference.matches) updateTrivia(); });
 
         randomTrivia.hidden = stingTrivia.length < 2;
         randomTrivia.addEventListener("click", () => selectTrivia());

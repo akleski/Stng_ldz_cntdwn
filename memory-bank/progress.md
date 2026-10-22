@@ -35,7 +35,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 | [TASK005](tasks/TASK005-expanded-trivia-json.md) | 87 verified bilingual JSON records | Completed | None |
 | [TASK006](tasks/TASK006-random-trivia-button.md) | Random Trivia button | Completed | None |
 | [TASK007](tasks/TASK007-trivia-category-badges.md) | Six localized category badges | Completed | TASK005 |
-| [TASK008](tasks/TASK008-trivia-fade-transition.md) | Motion-safe fade between facts | Pending | None |
+| [TASK008](tasks/TASK008-trivia-fade-transition.md) | Motion-safe fade between facts | Completed | None |
 | [TASK009](tasks/TASK009-trivia-fact-indicator.md) | Fact number and dataset total | Pending | None |
 | [TASK010](tasks/TASK010-trivia-repeat-prevention.md) | Browser-local consecutive-repeat prevention | Pending | TASK005, TASK006 |
 
@@ -61,3 +61,7 @@ Trivia upgrades are implemented and verified incrementally in separate commits. 
 ## TASK007 completion
 - Added a localized category badge (Kariera/Career, The Police, Życie prywatne/Personal Life, Nagrody/Awards, Filmy/Movies, Aktywizm/Activism) to the trivia card, updated in the same render as title and text; missing metadata hides it.
 - Verification: 48 browser checks at 1440px and 390px incl. all 87 records in PL and EN, atomic manual/automatic updates, unknown-category fallback; live screenshots inspected at both widths (longest PL badge wraps cleanly).
+
+## TASK008 completion
+- Added a 180 ms opacity fade between trivia facts via one shared render path: only badge, title and text fade, rapid requests share a single pending render, language change or reduced motion cancels it and renders immediately.
+- Verification: 62/53 browser checks at 1440px and 390px (normal and reduced motion, rapid clicks, language switch mid-fade, timer fades); live CDP check that toggling reduced motion mid-fade shows the fact immediately; no overflow or exceptions.

@@ -5,6 +5,7 @@
         checks.push(message);
     };
     const wait = () => new Promise(resolve => setTimeout(resolve, 400));
+    const settle = () => new Promise(resolve => setTimeout(resolve, 320));
     const rotationTimers = () => [...testIntervals].filter(([, timer]) => timer.delay === 20000).map(([id]) => id);
     const sameFact = () => {
         const copy = (stingTrivia[triviaIndex] || triviaFallback)[language];
@@ -80,6 +81,7 @@
                 previousIndex = triviaIndex;
             }
             assert(seen.size > 40, 'Rapid random selections stay varied');
+            await settle();
             sameFact();
             const afterTimer = rotationTimers();
             assert(afterTimer.length === 1 && afterTimer[0] !== firstTimer[0], 'Manual selection restarts one rotation timer');
@@ -118,9 +120,11 @@
             setLanguage('en');
             assert(badge.textContent !== before && triviaIndex === 0, 'Badge translates without selecting another fact');
             document.getElementById('randomTrivia').click();
+            await settle();
             sameFact();
             assert(badge.textContent === expected[stingTrivia[triviaIndex].category][1], 'Badge updates atomically on manual selection');
             testIntervals.get(rotationTimers()[0]).callback();
+            await settle();
             sameFact();
             assert(badge.textContent === expected[stingTrivia[triviaIndex].category][1], 'Badge updates atomically on automatic selection');
             stingTrivia.push({ ...stingTrivia[0], category: 'unknown' });
@@ -130,6 +134,49 @@
             stingTrivia.pop();
             triviaIndex = 0;
             updateTrivia();
+            setLanguage('pl');
+        }
+        if (testTask >= 8) {
+            const content = document.getElementById('triviaContent');
+            const button = document.getElementById('randomTrivia');
+            assert(content.contains(triviaTitle) && content.contains(triviaText) && content.contains(document.getElementById('triviaCategory')) &&
+                !content.contains(button), 'Fade wraps only the synchronized fact content');
+            setLanguage('en');
+            triviaIndex = 0;
+            updateTrivia();
+            if (testReducedMotion) {
+                button.click();
+                sameFact();
+                assert(!content.classList.contains('is-fading'), 'Reduced motion updates immediately without fading');
+                testIntervals.get(rotationTimers()[0]).callback();
+                sameFact();
+                assert(!content.classList.contains('is-fading'), 'Reduced motion automatic update is immediate');
+            } else {
+                const before = triviaIndex;
+                button.click();
+                assert(content.classList.contains('is-fading') && triviaText.textContent === stingTrivia[before].en.text, 'Old fact stays readable until fade-out completes');
+                await settle();
+                sameFact();
+                assert(!content.classList.contains('is-fading') && triviaIndex !== before, 'Fade-in completes with the selected fact');
+                for (let click = 0; click < 20; click++) button.click();
+                assert(content.classList.contains('is-fading'), 'Rapid requests share one fade');
+                await settle();
+                sameFact();
+                assert(!content.classList.contains('is-fading'), 'Rapid requests settle on the latest fact');
+                button.click();
+                const selectedDuringFade = triviaIndex;
+                setLanguage('pl');
+                assert(!content.classList.contains('is-fading'), 'Language switch cancels pending fade');
+                sameFact();
+                await settle();
+                sameFact();
+                assert(triviaIndex === selectedDuringFade && language === 'pl', 'Language switch during fade keeps selected fact');
+                testIntervals.get(rotationTimers()[0]).callback();
+                assert(content.classList.contains('is-fading'), 'Timer update uses the same fade');
+                await settle();
+                sameFact();
+                assert(!content.classList.contains('is-fading'), 'Timer fade settles');
+            }
             setLanguage('pl');
         }
         } else {

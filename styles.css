@@ -335,6 +335,8 @@ a:focus-visible, button:focus-visible, .glass-widget:focus-visible {
     -webkit-backdrop-filter: blur(18px);
     overflow-wrap: anywhere;
 }
+.trivia-content { transition: opacity 0.18s ease; }
+.trivia-content.is-fading { opacity: 0; }
 .trivia-card .trivia-category {
     display: inline-block;
     margin-bottom: 0.7rem;

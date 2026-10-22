@@ -6,7 +6,7 @@ A personal countdown for Adam and Monika to Sting’s concert at Atlas Arena in 
 
 ## Trivia
 
-The card rotates every 20 seconds through 87 original, sourced Polish/English facts. **Random fact** shows a different fact at once and restarts the timer. Each fact carries a localized category badge (Career, The Police, Personal Life, Awards, Movies, Activism). Switching language translates the current fact. The embedded `application/json` dataset works from a local file and GitHub Pages without fetching data.
+The card rotates every 20 seconds through 87 original, sourced Polish/English facts. **Random fact** shows a different fact at once and restarts the timer. Each fact carries a localized category badge (Career, The Police, Personal Life, Awards, Movies, Activism) and changes with a short fade (skipped under reduced motion). Switching language translates the current fact. The embedded `application/json` dataset works from a local file and GitHub Pages without fetching data.
 
 Each record has a unique stable `id`, a `category` (`career`, `police`, `personal`, `awards`, `movies`, or `activism`), `pl` and `en` objects with nonempty `title` and `text`, and a nonempty array of HTTPS `sources`. Source URLs document factual support; no lyrics or copied passages are included. Invalid JSON or records fall back to the bilingual teacher fact; empty/single-record datasets do not rotate.
 

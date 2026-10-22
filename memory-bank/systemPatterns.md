@@ -11,6 +11,7 @@ Static single page. All behaviour lives in one inline `<script>` at the end of `
 - Motion gate: `motionPreference = matchMedia("(prefers-reduced-motion: reduce)")`.
 - Trivia: `#stingTriviaData` is embedded non-executable JSON, parsed once by `parseTrivia()`. Records carry stable IDs, one of six category keys, paired PL/EN title/text and supporting HTTPS source URLs. Invalid data uses a bilingual fallback; empty/single datasets do not rotate.
 - Trivia badge: `categoryLabels` maps the six category keys to PL/EN labels; `updateTrivia()` sets badge, title and text together and hides the badge (no `undefined`) when a record lacks a known category. Badge is readable text in gold, not color-only, and the filter UI is intentionally absent.
+- Trivia fade: `updateTrivia(animate)` is immediate by default (language change, startup, motion change). `selectTrivia()` passes `animate = true`: `.trivia-content` (badge, title, text only) fades out 180 ms, `renderTrivia()` then renders the *current* selection and language, and it fades in. Requests during a fade reuse the pending render, a language change or a switch to reduced motion cancels it and renders at once, so content can never be left invisible.
 - Trivia selection: `selectTrivia(index, restart)` is the single path for manual and automatic changes; `startTriviaRotation()` owns the one 20-second interval. The Random fact button picks `triviaIndex + 1 + random(length - 1)` (never the current fact, no retry loop), restarts the interval, and is hidden when fewer than two records exist.
 
 ## CSS patterns

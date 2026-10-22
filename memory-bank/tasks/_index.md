@@ -4,11 +4,11 @@
 _None_
 
 ## Pending
-- [TASK008](TASK008-trivia-fade-transition.md) Fade between facts - Coordinated transition with reduced-motion fallback
 - [TASK009](TASK009-trivia-fact-indicator.md) Fact number indicator - Localized one-based position and actual dataset total
 - [TASK010](TASK010-trivia-repeat-prevention.md) Remember last fact - Browser-local consecutive-repeat prevention; depends on TASK005 and TASK006
 
 ## Completed
+- [TASK008](TASK008-trivia-fade-transition.md) Fade between facts - Coordinated transition with reduced-motion fallback - Completed 2026-10-22
 - [TASK007](TASK007-trivia-category-badges.md) Category badges - Career, The Police, Personal Life, Awards, Movies, Activism; depends on TASK005 - Completed 2026-10-22
 - [TASK006](TASK006-random-trivia-button.md) Random Trivia button - Accessible manual selection alongside automatic rotation - Completed 2026-10-22
 - [TASK005](TASK005-expanded-trivia-json.md) Expanded trivia JSON - 87 verified bilingual records with stable IDs and categories - Completed 2026-10-22
