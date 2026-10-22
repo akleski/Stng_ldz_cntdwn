@@ -65,6 +65,14 @@
                 <noscript><p class="countdown-caption">Włącz JavaScript, aby zobaczyć odliczanie na żywo. Koncert: 10 czerwca 2027, godz. 19:00 w Łodzi.</p></noscript>
             </div>
 
+            <section class="trivia-section" aria-labelledby="trivia-heading">
+                <h2 id="trivia-heading"><span aria-hidden="true">🎸</span> <span data-en="Sting Trivia">Ciekawostki o Stingu</span></h2>
+                <div class="trivia-card">
+                    <h3 id="triviaTitle">Nauczyciel przed karierą muzyczną</h3>
+                    <p id="triviaText">Zanim został Stingiem, Gordon Sumner pracował jako nauczyciel w szkole podstawowej.</p>
+                </div>
+            </section>
+
             <aside class="music-widget" aria-labelledby="music-title">
                 <p class="section-kicker" data-en="THE SOUNDTRACK TO OUR COUNTDOWN">MUZYKA DO NASZEGO ODLICZANIA</p>
                 <h2 id="music-title" data-en="Sting · favourite songs">Sting · ulubione utwory</h2>
@@ -135,6 +143,58 @@
             content: element.getAttribute("content")
         }));
 
+        const stingTrivia = [
+            {
+                pl: { title: "Nauczyciel przed karierą muzyczną", fact: "Zanim został Stingiem, Gordon Sumner pracował jako nauczyciel w szkole podstawowej." },
+                en: { title: "Teacher Before Rockstar", fact: "Before becoming Sting, Gordon Sumner worked as a primary-school teacher." }
+            },
+            {
+                pl: { title: "Skąd pseudonim Sting?", fact: "Pseudonim Sting wziął się od czarno-żółtego swetra w paski, który przypominał znajomym pszczołę." },
+                en: { title: "Nickname Origin", fact: "The name 'Sting' came from a black-and-yellow striped sweater that reminded friends of a bee." }
+            },
+            {
+                pl: { title: "Rola w Diunie", fact: "Sting zagrał Feyda-Rauthę Harkonnena w filmie Diuna z 1984 roku." },
+                en: { title: "Dune Appearance", fact: "Sting played Feyd-Rautha Harkonnen in the 1984 film Dune." }
+            },
+            {
+                pl: { title: "Every Breath You Take", fact: "Choć często uznawana za romantyczną, piosenka ta została napisana przez Stinga jako opowieść o obsesji i inwigilacji." },
+                en: { title: "Every Breath You Take", fact: "Although often treated as a romantic song, Sting wrote it as a song about obsession and surveillance." }
+            },
+            {
+                pl: { title: "W obronie lasów deszczowych", fact: "Sting był współzałożycielem Rainforest Foundation, organizacji wspierającej ochronę lasów deszczowych." },
+                en: { title: "Rainforest Activist", fact: "He co-founded the Rainforest Foundation to support rainforest conservation." }
+            },
+            {
+                pl: { title: "I Want My MTV", fact: "To właśnie Sting śpiewa te słynne słowa na początku utworu Money for Nothing zespołu Dire Straits." },
+                en: { title: "I Want My MTV", fact: "That's actually Sting singing those famous opening words in Dire Straits' 'Money for Nothing'." }
+            },
+            {
+                pl: { title: "Jazzowe korzenie", fact: "Sting często wymienia jazz jako jedną ze swoich najważniejszych inspiracji muzycznych." },
+                en: { title: "Jazz Roots", fact: "Sting frequently cites jazz as one of his strongest musical influences." }
+            },
+            {
+                pl: { title: "The Last Ship", fact: "Musical Stinga The Last Ship powstał z inspiracji jego dzieciństwem w pobliżu stoczni w północno-wschodniej Anglii." },
+                en: { title: "The Last Ship", fact: "His musical 'The Last Ship' was inspired by his childhood near shipyards in North East England." }
+            },
+            {
+                pl: { title: "Laureat Grammy", fact: "Sting zdobył 17 nagród Grammy za karierę solową i występy z zespołem The Police." },
+                en: { title: "Grammy Winner", fact: "Sting has won 17 Grammy Awards across his solo career and work with The Police." }
+            },
+            {
+                pl: { title: "Ciekawostka o Adamie i Monice", fact: "Dwa bilety do Łodzi na 10 czerwca 2027 są już kupione. 😎" },
+                en: { title: "Adam & Monika Fact", fact: "Two tickets are already secured for Łódź, 10 June 2027. 😎" }
+            }
+        ];
+        let triviaIndex = 0;
+        const triviaTitle = document.getElementById("triviaTitle");
+        const triviaText = document.getElementById("triviaText");
+
+        function updateTrivia() {
+            const trivia = stingTrivia[triviaIndex][language];
+            triviaTitle.textContent = trivia.title;
+            triviaText.textContent = trivia.fact;
+        }
+
         function updateStatus() {
             const copy = translations[language];
             document.getElementById("countdownHeading").textContent = concertArrived ? copy.arrivedHeading : copy.heading;
@@ -161,6 +221,7 @@
             languageSwitch.title = switchLabel;
             updateCountdown();
             updateStatus();
+            updateTrivia();
         }
 
         languageSwitch.addEventListener("click", () => {
@@ -196,6 +257,10 @@
         try { savedLanguage = localStorage.getItem("sting-language") || "pl"; } catch { /* Use Polish when storage is unavailable. */ }
         setLanguage(savedLanguage);
         languageSwitch.hidden = false;
+        setInterval(() => {
+            triviaIndex = (triviaIndex + 1) % stingTrivia.length;
+            updateTrivia();
+        }, 20000);
         if (!concertArrived) {
             const countdownTimer = setInterval(() => {
                 if (updateCountdown() === 0) clearInterval(countdownTimer);
