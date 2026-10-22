@@ -3,7 +3,7 @@
 **Updated:** 2026-10-22
 
 ## Current focus
-Phase 2 easter eggs complete: all four eggs implemented and browser-verified, each in a separate feature commit with memory-bank updates. Six independent trivia upgrades are tracked in [the task index](tasks/_index.md); TASK005-TASK010 remain planning-only, Pending at 0%.
+Phase 2 easter eggs are complete. Trivia upgrades TASK005-TASK010 are being implemented in separate commits, with exactly 87 sourced bilingual records. Latest completed item: TASK005. No Copilot co-author trailers and no push. See [task index](tasks/_index.md) for remaining work.
 
 ## Recent changes (from git history)
 - 2026-10-21 `fb58aa4` initial commit, `25d2bbc` premium microsite redesign, `be47fd5` PL default + EN/PL toggle.
@@ -38,3 +38,7 @@ Phase 2 easter eggs complete: all four eggs implemented and browser-verified, ea
 ## Open questions
 - Should the memory bank commit be separate from the first egg? (Plan assumes yes.) Answer: YES.
 - Five draft PL/EN memory texts are in TASK002; user may add details or revise wording later. Playback and privacy choices are implemented and browser-verified. Actual local voices and audible output require a manual device check.
+
+## TASK005 implemented
+- Embedded 87 sourced bilingual trivia records (career 18, police 16, personal 12, awards 15, movies 14, activism 12) as non-executable JSON with stable IDs, parsed once and validated, with a bilingual fallback and no pointless rotation for empty/single datasets.
+- Verification: Every record fact-checked against fetched sources by independent reviewers and corrected; 27 browser checks passed at 1440px and 390px with reduced motion, plus broken/empty/single dataset variants.

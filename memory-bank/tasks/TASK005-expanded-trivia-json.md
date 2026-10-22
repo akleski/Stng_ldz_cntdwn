@@ -1,6 +1,6 @@
 # TASK005 - Expand trivia to 50-100 JSON records
 
-**Status:** Pending  
+**Status:** Completed  
 **Added:** 2026-10-22  
 **Updated:** 2026-10-22
 
@@ -14,7 +14,7 @@
 
 ## Implementation Plan
 - Define and document a JSON schema with `id`, `category`, `pl`, `en`, and `sources` fields.
-- Review existing facts and expand to 50-100 unique, verified records across Career, The Police, Personal Life, Awards, Movies, and Activism.
+- Review existing facts and expand to 87 unique, verified records across Career, The Police, Personal Life, Awards, Movies, and Activism.
 - Parse the embedded dataset once and preserve the existing rotation and language-switch behavior; retain a readable fallback if parsing fails.
 - Verify count, unique IDs, allowed categories, bilingual completeness, source support, and direct-file/hosted loading.
 
@@ -24,15 +24,19 @@
 
 ## Progress Tracking
 
-**Overall Status:** Not Started - 0%
+**Overall Status:** Completed - 100%
 
 ### Subtasks
 | ID | Description | Status | Updated | Notes |
 |----|-------------|--------|---------|-------|
-| 5.1 | Define schema and verify/expand bilingual content | Not Started | 2026-10-22 | 50-100 records |
-| 5.2 | Integrate embedded JSON with existing renderer | Not Started | 2026-10-22 | Preserve file-based use |
-| 5.3 | Validate dataset and browser behavior; update memory bank | Not Started | 2026-10-22 | PL/EN, desktop/mobile |
+| 5.1 | Define schema and verify/expand bilingual content | Complete | 2026-10-22 | 50-100 records |
+| 5.2 | Integrate embedded JSON with existing renderer | Complete | 2026-10-22 | Preserve file-based use |
+| 5.3 | Validate dataset and browser behavior; update memory bank | Complete | 2026-10-22 | PL/EN, desktop/mobile |
 
 ## Progress Log
 ### 2026-10-22
 - Created from the selected future-upgrades list. Planning only; no application changes.
+
+- Implemented: Embedded 87 sourced bilingual trivia records (career 18, police 16, personal 12, awards 15, movies 14, activism 12) as non-executable JSON with stable IDs, parsed once and validated, with a bilingual fallback and no pointless rotation for empty/single datasets.
+- Verified: Every record fact-checked against fetched sources by independent reviewers and corrected; 27 browser checks passed at 1440px and 390px with reduced motion, plus broken/empty/single dataset variants.
+- Updated task status, subtasks, index, progress and active context in the separate feature commit; no Copilot trailer and no push.

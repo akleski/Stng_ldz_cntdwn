@@ -9,6 +9,7 @@ Static single page. All behaviour lives in one inline `<script>` at the end of `
 - `updateCountdown()` runs every second; sets `concertArrived` when diff hits 0 (also on load after the date), then `updateStatus()` and timeline icon classes.
 - `syncParticles()` builds ~22 `.particle` spans in `#particles`; cleared when reduced motion is on.
 - Motion gate: `motionPreference = matchMedia("(prefers-reduced-motion: reduce)")`.
+- Trivia: `#stingTriviaData` is embedded non-executable JSON, parsed once by `parseTrivia()`. Records carry stable IDs, one of six category keys, paired PL/EN title/text and supporting HTTPS source URLs. Invalid data uses a bilingual fallback; empty/single datasets do not rotate.
 
 ## CSS patterns
 - Tokens in `:root`: `--gold`, `--gold-soft`, `--emerald`, `--emerald-soft`, `--ink`, `--glass`, `--ease`.

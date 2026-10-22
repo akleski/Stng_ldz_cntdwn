@@ -18,6 +18,6 @@ Add four hidden surprises (TASK001-TASK004). See `tasks/_index.md`. TASK002 incl
 
 ## Working rules for this phase
 - One commit per task, never combined.
-- Commit messages follow the `/caveman-commit` skill (Conventional Commits, terse, why over what), with the Copilot co-author trailer used by the task index.
+- Commit messages follow the `/caveman-commit` skill (Conventional Commits, terse, why over what), without any Copilot co-author trailer.
 - Never push unless asked.
 - Update this memory bank (task file, `_index.md`, `progress.md`, `activeContext.md`) in the same commit as the feature it describes.

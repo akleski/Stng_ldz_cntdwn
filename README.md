@@ -4,6 +4,22 @@ A personal countdown for Adam and Monika to Sting’s concert at Atlas Arena in 
 
 **[View the live countdown on GitHub Pages](https://akleski.github.io/Stng_ldz_cntdwn/)**
 
+## Trivia
+
+The card rotates every 20 seconds through 87 original, sourced Polish/English facts. Switching language translates the current fact. The embedded `application/json` dataset works from a local file and GitHub Pages without fetching data.
+
+Each record has a unique stable `id`, a `category` (`career`, `police`, `personal`, `awards`, `movies`, or `activism`), `pl` and `en` objects with nonempty `title` and `text`, and a nonempty array of HTTPS `sources`. Source URLs document factual support; no lyrics or copied passages are included. Invalid JSON or records fall back to the bilingual teacher fact; empty/single-record datasets do not rotate.
+
+Run browser regression checks with an installed Chromium browser (no package installation):
+
+```powershell
+.\tests\run-trivia.ps1 -Task 5
+.\tests\run-trivia.ps1 -Task 5 -Width 390 -ReducedMotion
+.\tests\run-trivia.ps1 -Task 5 -Dataset broken
+```
+
+Use `-Chrome` to override the browser executable path. Tests use a temporary profile and page, stub only intervals for deterministic timer checks, and remove the test artifacts afterwards.
+
 ## Hidden surprises
 - Click or keyboard-activate the heart for gold and emerald sparks.
 - Triple-click/tap **STING** within one second (or use ↑ ↑ ↓ ↓ ← → ← → B A) to reveal arena beams and one of five personal memories. **Read aloud** uses only local voices matching the current PL/EN language; it never starts automatically. If no suitable voice exists, the memory remains text-only.

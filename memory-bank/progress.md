@@ -26,13 +26,13 @@ _None. All four Phase 2 eggs are implemented and browser-verified._
 | TASK003 | Song wink: console message + footer dot titles | Completed |
 | TASK004 | Concert-day confetti celebration | Completed |
 
-## What's left (trivia upgrades)
+## Trivia upgrades
 
-All six tasks are planning-only, Pending at 0%; no trivia upgrade code has been written.
+Trivia upgrades are implemented and verified incrementally in separate commits. TASK005 targets exactly 87 bilingual records; remaining Pending rows have not shipped yet.
 
 | Task | Upgrade | Status | Prerequisites |
 |------|---------|--------|---------------|
-| [TASK005](tasks/TASK005-expanded-trivia-json.md) | 50-100 verified bilingual JSON records | Pending | None |
+| [TASK005](tasks/TASK005-expanded-trivia-json.md) | 87 verified bilingual JSON records | Completed | None |
 | [TASK006](tasks/TASK006-random-trivia-button.md) | Random Trivia button | Pending | None |
 | [TASK007](tasks/TASK007-trivia-category-badges.md) | Six localized category badges | Pending | TASK005 |
 | [TASK008](tasks/TASK008-trivia-fade-transition.md) | Motion-safe fade between facts | Pending | None |
@@ -49,3 +49,7 @@ All six tasks are planning-only, Pending at 0%; no trivia upgrade code has been 
 - `.github/` is gitignored, so local instruction files are not shared via the repo.
 - Headless Edge's window minimum is bypassed by CDP device metrics for true 390px viewport checks.
 - Local voice availability and perceived voice gender vary by device; text-only fallback is intentional.
+
+## TASK005 completion
+- Embedded 87 sourced bilingual trivia records (career 18, police 16, personal 12, awards 15, movies 14, activism 12) as non-executable JSON with stable IDs, parsed once and validated, with a bilingual fallback and no pointless rotation for empty/single datasets.
+- Verification: Every record fact-checked against fetched sources by independent reviewers and corrected; 27 browser checks passed at 1440px and 390px with reduced motion, plus broken/empty/single dataset variants.

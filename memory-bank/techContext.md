@@ -8,7 +8,12 @@
 - Windows, PowerShell. Node v26 available (no Playwright/Puppeteer installed). Microsoft Edge at `C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe`.
 - `.gitignore` ignores `docs` and `.github/`. `memory-bank/` is tracked.
 
-## Verification approach (no test framework in repo)
+## Trivia regression checks
+- `tests/run-trivia.ps1` runs `tests/trivia.test.js` in an installed Chromium browser, without Node or package dependencies. Override the executable with `-Chrome`.
+- Temporary local page/profile, exact-width iframe for 1440px/390px, optional real reduced-motion browser flag; interval registration/callbacks are deterministic. Broken, empty and single-record dataset variants exercise startup fallback. Temporary artifacts are removed.
+- Run with `-Task 5` through `-Task 10` as each feature is introduced; tests remain cumulative. Browser assertions verify title/text localization, selection, countdown initialization and no overflow/exceptions.
+
+## Verification approach (easter eggs)
 1. Static: view diffs, confirm no console errors.
 2. Visual: headless Edge screenshot, launched via `Start-Process -PassThru` + `WaitForExit(timeout)` + throwaway `--user-data-dir`. A bare `&` call can hang.
 3. Interaction and time-travel: drive headless Edge over the Chrome DevTools Protocol with a temp Node script (built-in `WebSocket`, `--remote-debugging-port`). Use `Page.addScriptToEvaluateOnNewDocument` to override `Date` for the concert-day test (TASK004), `Input.dispatchKeyEvent` for the Konami code, `Input.dispatchMouseEvent` for clicks. Keep scripts in `%TEMP%`, delete afterwards.
