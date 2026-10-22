@@ -107,7 +107,7 @@
             <span class="closing-note"><span class="adam">ADAM</span> <span aria-hidden="true">&</span> <span class="monika">MONIKA</span> · ŁÓDŹ 2027</span>
         </section>
     </main>
-    <footer><span data-en="OUR LITTLE CORNER OF THE COUNTDOWN.">NASZ MAŁY ZAKĄTEK ODLICZANIA.</span><span>10.06.2027 <span class="footer-dot" aria-hidden="true">·</span> ATLAS ARENA</span></footer>
+    <footer><span data-en="OUR LITTLE CORNER OF THE COUNTDOWN.">NASZ MAŁY ZAKĄTEK ODLICZANIA.</span><span>10.06.2027 <button type="button" class="footer-dot" aria-label="Mała niespodzianka" data-en-aria-label="A little surprise">·</button> ATLAS ARENA</span></footer>
 
     <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
     <p class="toast" id="songToast" role="status" aria-atomic="true"></p>
@@ -151,7 +151,8 @@
                 localVoice: "Głos działa na tym urządzeniu. Odczyt rozpocznie się dopiero po naciśnięciu Czytaj na głos.",
                 speechError: "Odczyt jest niedostępny. Wspomnienie pozostaje tutaj do przeczytania.",
                 speaking: "Czytanie wspomnienia…",
-                noVoiceOption: "Brak lokalnego głosu"
+                noVoiceOption: "Brak lokalnego głosu",
+                consoleWink: "Mała niespodzianka: Roxanne · Englishman in New York"
             },
             en: {
                 heading: "THE NIGHT GETS CLOSER",
@@ -165,7 +166,8 @@
                 localVoice: "This voice runs on your device. Narration starts only when you press Read aloud.",
                 speechError: "Narration is unavailable. The memory is still here to read.",
                 speaking: "Reading the memory…",
-                noVoiceOption: "No local voice"
+                noVoiceOption: "No local voice",
+                consoleWink: "A little surprise: Roxanne · Englishman in New York"
             }
         };
         const localizedElements = Array.from(document.querySelectorAll("[data-en], [data-en-aria-label], [data-en-content]"), element => ({
@@ -562,6 +564,13 @@
             }
             particles.appendChild(fragment);
         }
+        const songs = ["Roxanne", "Englishman in New York", "Fields of Gold", "Shape of My Heart", "Every Breath You Take", "Desert Rose"];
+        let songIndex = 0;
+        document.querySelector(".footer-dot").addEventListener("click", () => {
+            const index = songIndex++ % songs.length;
+            showToast(`♫ ${songs[index]}`, index % 2 === 0 ? "gold" : "emerald");
+        });
+
         let savedLanguage = "pl";
         try { savedLanguage = localStorage.getItem("sting-language") || "pl"; } catch { /* Use Polish when storage is unavailable. */ }
         setLanguage(savedLanguage);
@@ -570,6 +579,7 @@
             triviaIndex = (triviaIndex + 1) % stingTrivia.length;
             updateTrivia();
         }, 20000);
+        console.log(`%c♫ %c${translations[language].consoleWink}`, "color: #F59E0B; font-weight: bold", "color: #10B981");
         if (!concertArrived) {
             const countdownTimer = setInterval(() => {
                 if (updateCountdown() === 0) clearInterval(countdownTimer);

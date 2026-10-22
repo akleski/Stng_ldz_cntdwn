@@ -11,7 +11,7 @@
 - Ten bilingual Sting trivia records rotate every 20 seconds (`a0351cb`).
 
 ## In progress
-- TASK002 verified and ready for its separate commit. TASK003 is next.
+- TASK003 verified and ready for its separate commit. TASK004 is next.
 - Heart sparks, dedication memories, arena beams and local-only narration work. Audible output still needs a manual device check.
 
 ## What's left (Phase 2: easter eggs)
@@ -19,7 +19,7 @@
 |------|-----|--------|
 | TASK001 | Heart spark burst | Completed |
 | TASK002 | Konami / triple-tap STING: beams + five random bilingual memories + optional local TTS | Completed |
-| TASK003 | Song wink: console message + footer dot titles | Pending |
+| TASK003 | Song wink: console message + footer dot titles | Completed |
 | TASK004 | Concert-day confetti celebration | Pending |
 
 ## What's left (trivia upgrades)
@@ -37,7 +37,8 @@ All six tasks are planning-only, Pending at 0%; no trivia upgrade code has been 
 
 ## Commit log (Phase 2)
 - `19df3bf feat: add heart click spark burst`
-- TASK002: `feat: add spoken dedication and arena beams` (hash recorded after committing).
+- `178eb96 feat: add spoken dedication and arena beams`
+- TASK003: `feat: add song title wink in footer and console` (hash recorded after committing).
 
 ## Known issues
 - `.github/` is gitignored, so local instruction files are not shared via the repo.

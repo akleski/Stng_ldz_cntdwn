@@ -595,7 +595,15 @@ footer {
     font-size: 0.7rem;
     letter-spacing: 0.2em;
 }
-.footer-dot { color: var(--gold); }
+.footer-dot {
+    border: 0;
+    padding: 0;
+    background: none;
+    color: var(--gold);
+    font: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+}
 
 /* Animations */
 @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
